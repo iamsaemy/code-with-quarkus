@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Aatrox 상세 정보</title>
+
+    <!-- Bootstrap 5 CSS 연결 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background-color: #0a0e17;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        padding: 24px;
+      }
+
+      .accent-red {
+        color: #ff0000;
+      }
+
+      .accent-purple {
+        color: #a020f0;
+      }
+
+      .champion-img {
+        width: 160px;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 12px;
+      }
+
+      .info-box {
+        background-color: #1e1e1e;
+        border-radius: 12px;
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-md-4 text-center">
+          <!-- modals 폴더 기준으로 images 폴더는 한 단계 위에 있음 -->
+          <img
+            src="../images/Aatrox.png"
+            alt="Aatrox"
+            class="champion-img mb-3"
+          />
+          <h3 class="accent-red">아트록스</h3>
+          <p>다르킨의 검</p>
+        </div>
+
+        <div class="col-md-8">
+          <div class="info-box">
+            <h4 class="accent-purple mb-3">챔피언 정보</h4>
+
+            <table class="table table-dark table-bordered">
+              <tbody>
+                <tr>
+                  <th>영문명</th>
+                  <td>Aatrox</td>
+                </tr>
+                <tr>
+                  <th>역할</th>
+                  <td>전사</td>
+                </tr>
+                <tr>
+                  <th>라인</th>
+                  <td>탑</td>
+                </tr>
+                <tr>
+                  <th>난이도</th>
+                  <td>상</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h4 class="accent-purple mt-4">배경 스토리</h4>
+            <p>
+              아트록스는 거대한 검을 사용하는 전사형 챔피언입니다. 전투에서
+              강력한 피해를 주며, 앞라인에서 싸우는 역할을 합니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

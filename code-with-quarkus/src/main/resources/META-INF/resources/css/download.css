@@ -1,0 +1,53 @@
+body {
+  background-color: #0a0e17;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  background-color: #000;
+}
+
+.download-hero {
+  min-height: 60vh;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
+    url("../images/download-banner.jpg") center / cover no-repeat;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+.btn-download {
+  background-color: #a020f0;
+  color: white;
+  border: none;
+}
+
+.btn-download:hover {
+  background-color: #800080;
+  color: white;
+}
+
+/* ── 시스템 사양 표 영역 ───────────────────────────── */
+.table-responsive {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table th {
+  background-color: #111827;
+  color: #ffffff;
+}
+
+.table td {
+  background-color: #1e1e1e;
+  color: #dddddd;
+}
+
+/* ── 다운로드 페이지 하단 여백 ─────────────────────── */
+section.container {
+  padding-bottom: 40px;
+}

@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LOL - 다운로드</title>
+
+    <!-- Bootstrap 5 CSS 연결 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- 다운로드 페이지 전용 CSS -->
+    <link rel="stylesheet" href="../css/download.css" />
+  </head>
+  <body>
+    <!-- 네비바 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/index.html">League of Legends</a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavDarkDropdown"
+          aria-controls="navbarNavDarkDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/index.html">메인화면</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/index.html#news">뉴스</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/index.html#champions">챔피언</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link active" href="/main_page_sub/download.html"
+                >다운로드</a
+              >
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/login_page_sub/login.html">로그인</a>
+            </li>
+
+            <!-- 드롭다운 메뉴 -->
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="externalSiteDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                외부사이트
+              </a>
+
+              <ul
+                class="dropdown-menu dropdown-menu-dark"
+                aria-labelledby="externalSiteDropdown"
+              >
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="https://www.leagueoflegends.com/ko-kr/"
+                    target="_blank"
+                  >
+                    LOL 공식 웹사이트
+                  </a>
+                </li>
+
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="https://getbootstrap.kr/docs/5.0/"
+                    target="_blank"
+                  >
+                    Bootstrap 공식문서
+                  </a>
+                </li>
+
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="https://quarkus.io/"
+                    target="_blank"
+                  >
+                    Quarkus 공식문서
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- 다운로드 메인 영역 -->
+    <section class="download-hero">
+      <div class="container">
+        <h1 class="display-4 fw-bold">게임 다운로드</h1>
+        <p class="lead mb-4">
+          지금 바로 리그 오브 레전드를 무료로 플레이하세요!
+        </p>
+
+        <a href="#" class="btn btn-download btn-lg me-2">Windows 다운로드</a>
+        <a href="#" class="btn btn-outline-light btn-lg">Mac 다운로드</a>
+      </div>
+    </section>
+
+    <!-- 시스템 사양 영역 -->
+    <section class="container my-5">
+      <h2 class="text-center mb-4">권장 시스템 사양</h2>
+
+      <div class="table-responsive">
+        <table
+          class="table table-dark table-bordered table-hover text-center align-middle"
+        >
+          <thead>
+            <tr>
+              <th>구분</th>
+              <th>최소 사양</th>
+              <th>권장 사양</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>운영체제</td>
+              <td>Windows 10 64-bit</td>
+              <td>Windows 11 64-bit</td>
+            </tr>
+            <tr>
+              <td>CPU</td>
+              <td>Intel Core i3</td>
+              <td>Intel Core i5 이상</td>
+            </tr>
+            <tr>
+              <td>메모리</td>
+              <td>4GB RAM</td>
+              <td>8GB RAM 이상</td>
+            </tr>
+            <tr>
+              <td>그래픽</td>
+              <td>내장 그래픽</td>
+              <td>GTX 1050 이상</td>
+            </tr>
+            <tr>
+              <td>저장 공간</td>
+              <td>20GB 이상</td>
+              <td>30GB 이상 여유 공간</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Bootstrap 5 JS 연결 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

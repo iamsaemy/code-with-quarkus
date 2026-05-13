@@ -1,82 +1,67 @@
-# code-with-quarkus
+# Quarkus LOL Fan Site
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+자바웹프로그래밍 수업 실습 프로젝트입니다.  
+Quarkus 기반으로 LOL 팬 사이트 메인 페이지, 챔피언 상세 모달, 로그인 페이지, 다운로드 페이지를 구현했습니다.
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+## 2주차 수업 내용
 
-## Running the application in dev mode
+- Quarkus 개발 환경 구축
+- `http://localhost:8080/` 서버 실행 확인
+- `META-INF/resources/index.html` 생성
+- HTML 기본 태그 작성
+- Bootstrap 5 적용
+- LOL 메인화면 프로토타입 구현
+- 다크 테마 CSS 및 카드 hover 효과 적용
 
-You can run your application in dev mode that enables live coding using:
+## 4주차 수업 내용
 
-```shell script
-./mvnw quarkus:dev
+- 네비게이션 바 수정
+- 메인화면 / 뉴스 / 챔피언 / 다운로드 / 로그인 메뉴 구성
+- 외부사이트 드롭다운 메뉴 추가
+- LOL 공식 웹사이트, Bootstrap 공식문서, Quarkus 공식문서 링크 연결
+- 챔피언 카드 6개 구성
+- Aatrox 상세보기 버튼 추가
+- Bootstrap 모달창 구현
+- `modals/Aatrox.html` 상세 페이지 생성
+- iframe 방식으로 모달 내용 분리
+- `images/Aatrox.png` 로컬 이미지 적용
+- 로그인 서브 페이지 생성
+- `login_page_sub/login.html` 연결
+- 다운로드 서브 페이지 생성
+- `main_page_sub/download.html` 연결
+- `download-banner.jpg` 배경 이미지 적용
+- 권장 시스템 사양 표 추가
+- `download.css` 파일로 CSS 분리
+
+## 실행 방법
+
+```bash
+cmd /c mvnw.cmd quarkus:dev
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+브라우저에서 아래 주소로 접속합니다.
 
-## Packaging and running the application
-
-The application can be packaged using:
-
-```shell script
-./mvnw package
+```text
+http://localhost:8080/
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+## 주요 페이지
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+- 메인 페이지: `http://localhost:8080/`
+- 로그인 페이지: `http://localhost:8080/login_page_sub/login.html`
+- 다운로드 페이지: `http://localhost:8080/main_page_sub/download.html`
+- 아트록스 상세 페이지: `http://localhost:8080/modals/Aatrox.html`
 
-If you want to build an _über-jar_, execute the following command:
+## 화면 예시
 
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
+### 메인 페이지
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+<img src="screenshots/main-page.png" width="600" alt="메인 페이지">
 
-## Creating a native executable
+### 아트록스 상세 모달
 
-You can create a native executable using:
+<img src="screenshots/aatrox-modal.png" width="600" alt="아트록스 상세 모달">
 
-```shell script
-./mvnw package -Dnative
-```
+### 다운로드 페이지
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/code-with-quarkus-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Related Guides
-
-- REST ([guide](https://quarkus.io/guides/rest)): Build RESTful web services and APIs using Jakarta REST (formerly JAX-RS)
-- Qute Web ([guide](https://quarkiverse.github.io/quarkiverse-docs/quarkus-qute-web/dev/index.html)): Serves Qute templates directly over HTTP.
-- Qute ([guide](https://quarkus.io/guides/qute)): Offer templating support for web, email, etc in a build time, type-safe way
-- OpenID Connect ([guide](https://quarkus.io/guides/security-openid-connect)): Secure applications with OpenID Connect and OAuth 2.0 using bearer tokens and authorization code flow
-- WebSockets ([guide](https://quarkus.io/guides/websockets)): WebSocket communication channel support
-
-## Provided Code
-
-### Qute Web
-
-Qute templates like `some-page.html` served via HTTP automatically by Quarkus from the `src/main/resource/templates/pub` directory. No controllers needed. Once the quarkus app is started visit the generated page at http://localhost:8080/some-page?name=World
-
-[Related guide section...](https://docs.quarkiverse.io/quarkus-qute-web/dev/index.html)
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
-
-### WebSockets
-
-WebSocket communication channel starter code
-
-[Related guide section...](https://quarkus.io/guides/websockets)
+<img src="screenshots/download-page.png" width="600" alt="다운로드 페이지">

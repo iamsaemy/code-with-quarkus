@@ -67,25 +67,92 @@
   </head>
   <body>
     <!-- 1. 상단 네비게이션 바 -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">League of Legends</a>
+        <a class="navbar-brand" href="/index.html">League of Legends</a>
 
         <button
           class="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
+          data-bs-target="#navbarNavDarkDropdown"
+          aria-controls="navbarNavDarkDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="#">뉴스</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">챔피언</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">다운로드</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">로그인</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="/index.html">메인화면</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/index.html#news">뉴스</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/index.html#champions">챔피언</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/login_page_sub/login.html">로그인</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#">로그인</a>
+            </li>
+
+            <!-- 드롭다운 메뉴 -->
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="externalSiteDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                외부사이트
+              </a>
+
+              <ul
+                class="dropdown-menu dropdown-menu-dark"
+                aria-labelledby="externalSiteDropdown"
+              >
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="https://www.leagueoflegends.com/ko-kr/"
+                    target="_blank"
+                  >
+                    LOL 공식 웹사이트
+                  </a>
+                </li>
+
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="https://getbootstrap.kr/docs/5.0/"
+                    target="_blank"
+                  >
+                    Bootstrap 공식문서
+                  </a>
+                </li>
+
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="https://quarkus.io/"
+                    target="_blank"
+                  >
+                    Quarkus 공식문서
+                  </a>
+                </li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
@@ -105,7 +172,8 @@
     </section>
 
     <!-- 3. 챔피언 카드 영역 -->
-    <section class="container my-5">
+    <!-- 3. 챔피언 카드 영역 -->
+    <section id="champions" class="container my-5">
       <h2 class="text-center mb-4 accent-purple">챔피언 선택</h2>
       <p class="text-center mb-5">
         전투에 뛰어들기, 팀 지원, 또는 그 중간? 당신의 스타일을 선택하세요.
@@ -120,9 +188,20 @@
               class="card-img-top"
               alt="Aatrox"
             />
+
             <div class="card-body">
               <h5 class="card-title accent-red">Aatrox</h5>
               <p class="card-text">어둠의 검으로 적을 베세요.</p>
+            </div>
+
+            <div class="card-footer bg-transparent border-0">
+              <button
+                class="btn btn-outline-light w-100"
+                data-bs-toggle="modal"
+                data-bs-target="#modalAatrox"
+              >
+                상세 보기
+              </button>
             </div>
           </div>
         </div>
@@ -135,6 +214,7 @@
               class="card-img-top"
               alt="Sylas"
             />
+
             <div class="card-body">
               <h5 class="card-title accent-purple">Sylas</h5>
               <p class="card-text">궁극기를 훔치세요!</p>
@@ -150,6 +230,7 @@
               class="card-img-top"
               alt="Anivia"
             />
+
             <div class="card-body">
               <h5 class="card-title accent-red">Anivia</h5>
               <p class="card-text">얼음으로 적을 봉인하세요.</p>
@@ -165,6 +246,7 @@
               class="card-img-top"
               alt="Briar"
             />
+
             <div class="card-body">
               <h5 class="card-title accent-purple">Briar</h5>
               <p class="card-text">광폭한 힘으로 돌진하세요.</p>
@@ -180,6 +262,7 @@
               class="card-img-top"
               alt="Jax"
             />
+
             <div class="card-body">
               <h5 class="card-title accent-red">Jax</h5>
               <p class="card-text">강력한 무기로 적을 제압하세요.</p>
@@ -195,6 +278,7 @@
               class="card-img-top"
               alt="Jinx"
             />
+
             <div class="card-body">
               <h5 class="card-title accent-purple">Jinx</h5>
               <p class="card-text">폭발로 적을 날려버리세요.</p>
@@ -205,7 +289,7 @@
     </section>
 
     <!-- 4. 최신 뉴스 영역 -->
-    <section class="container my-5">
+    <section id="news" class="container my-5">
       <h2 class="text-center mb-4 accent-red">최신 뉴스</h2>
 
       <div class="row g-4">
@@ -232,8 +316,57 @@
         </div>
       </div>
     </section>
+    <!-- Aatrox 상세 정보 모달: iframe 방식 -->
+    <div
+      class="modal fade"
+      id="modalAatrox"
+      tabindex="-1"
+      aria-labelledby="modalAatroxLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div class="modal-content bg-dark text-white border-secondary">
+          <div class="modal-header border-secondary">
+            <h5 class="modal-title" id="modalAatroxLabel">
+              아트록스 Aatrox 상세 정보
+            </h5>
 
-    <!-- Bootstrap 5 JS 연결: 모바일 메뉴 버튼 동작에 필요 -->
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="닫기"
+            ></button>
+          </div>
+
+          <!-- 모달 안에 별도 HTML 파일을 불러오는 영역 -->
+          <div
+            class="modal-body p-0"
+            style="height: 65vh; background-color: #0a0e17"
+          >
+            <iframe
+              src="modals/Aatrox.html"
+              frameborder="0"
+              style="width: 100%; height: 100%; border: none"
+              allowfullscreen
+            ></iframe>
+          </div>
+
+          <div class="modal-footer border-secondary">
+            <button
+              type="button"
+              class="btn btn-outline-light"
+              data-bs-dismiss="modal"
+            >
+              닫기
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Bootstrap 5 JS 연결: 드롭다운 메뉴 동작에 필요 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
