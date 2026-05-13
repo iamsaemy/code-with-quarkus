@@ -5,68 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>League of Legends - 메인 페이지</title>
 
-    <!-- Bootstrap 5 CSS 연결 -->
+    <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
 
-    <!-- 커스텀 CSS: LOL 다크 테마 -->
-    <style>
-      body {
-        background-color: #0a0e17;
-        color: #fff;
-        font-family: Arial, sans-serif;
-      }
-
-      .navbar {
-        background-color: #000;
-      }
-
-      .hero {
-        background: linear-gradient(to bottom, #1e1e1e, #0a0e17);
-        min-height: 50vh;
-      }
-
-      .accent-purple {
-        color: #a020f0;
-      }
-
-      .accent-red {
-        color: #ff0000;
-      }
-
-      .card {
-        background-color: #1e1e1e;
-        border: none;
-        color: white;
-        transition:
-          transform 0.3s,
-          box-shadow 0.3s;
-      }
-
-      .card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 10px 20px rgba(160, 32, 240, 0.5);
-      }
-
-      .card-img-top {
-        height: 200px;
-        object-fit: cover;
-      }
-
-      .btn-primary {
-        background-color: #a020f0;
-        border: none;
-      }
-
-      .btn-primary:hover {
-        background-color: #800080;
-      }
-    </style>
+    <!-- 내가 만든 CSS -->
+    <link rel="stylesheet" href="css/main.css" />
   </head>
+
   <body>
-    <!-- 1. 상단 네비게이션 바 -->
+    <!-- 상단 네비게이션 바 -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="/index.html">League of Legends</a>
@@ -90,22 +40,24 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="/index.html#news">뉴스</a>
+              <a class="nav-link" href="#news">뉴스</a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="/index.html#champions">챔피언</a>
+              <a class="nav-link" href="#champions">챔피언</a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="/login_page_sub/login.html">로그인</a>
+              <a class="nav-link" href="main_page_sub/download.html"
+                >다운로드</a
+              >
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#">로그인</a>
+              <a class="nav-link" href="login_page_sub/login.html">로그인</a>
             </li>
 
-            <!-- 드롭다운 메뉴 -->
+            <!-- 외부사이트 드롭다운 -->
             <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
@@ -152,13 +104,26 @@
                   </a>
                 </li>
               </ul>
+              <!-- 검색창 -->
+              <form class="d-flex ms-lg-3 mt-2 mt-lg-0" id="searchForm">
+                <input
+                  class="form-control me-2"
+                  type="search"
+                  placeholder="챔피언, 뉴스 검색..."
+                  aria-label="Search"
+                  id="searchInput"
+                />
+                <button class="btn btn-outline-success" type="submit">
+                  검색하기
+                </button>
+              </form>
             </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <!-- 2. 메인 소개 영역 -->
+    <!-- 메인 소개 영역 -->
     <section
       class="hero d-flex align-items-center justify-content-center text-center py-5"
     >
@@ -167,12 +132,16 @@
         <p class="lead">
           적의 넥서스를 파괴하세요! 5v5 MOBA 전투에서 팀과 함께 승리하세요.
         </p>
-        <a href="#" class="btn btn-primary btn-lg">무료 플레이</a>
+        <a
+          href="#"
+          class="btn btn-primary btn-lg"
+          onclick="alert('즐거운 플레이 되세요')"
+          >무료 플레이</a
+        >
       </div>
     </section>
 
-    <!-- 3. 챔피언 카드 영역 -->
-    <!-- 3. 챔피언 카드 영역 -->
+    <!-- 챔피언 카드 영역 -->
     <section id="champions" class="container my-5">
       <h2 class="text-center mb-4 accent-purple">챔피언 선택</h2>
       <p class="text-center mb-5">
@@ -184,9 +153,10 @@
         <div class="col-md-6 col-lg-4 col-xl-2">
           <div class="card text-center h-100">
             <img
-              src="https://ddragon.leagueoflegends.com/cdn/15.24.1/img/champion/Aatrox.png"
+              src="images/Aatrox.png"
               class="card-img-top"
               alt="Aatrox"
+              loading="lazy"
             />
 
             <div class="card-body">
@@ -197,6 +167,7 @@
             <div class="card-footer bg-transparent border-0">
               <button
                 class="btn btn-outline-light w-100"
+                type="button"
                 data-bs-toggle="modal"
                 data-bs-target="#modalAatrox"
               >
@@ -213,6 +184,7 @@
               src="https://ddragon.leagueoflegends.com/cdn/15.24.1/img/champion/Sylas.png"
               class="card-img-top"
               alt="Sylas"
+              loading="lazy"
             />
 
             <div class="card-body">
@@ -229,6 +201,7 @@
               src="https://ddragon.leagueoflegends.com/cdn/15.24.1/img/champion/Anivia.png"
               class="card-img-top"
               alt="Anivia"
+              loading="lazy"
             />
 
             <div class="card-body">
@@ -245,6 +218,7 @@
               src="https://ddragon.leagueoflegends.com/cdn/15.24.1/img/champion/Briar.png"
               class="card-img-top"
               alt="Briar"
+              loading="lazy"
             />
 
             <div class="card-body">
@@ -261,6 +235,7 @@
               src="https://ddragon.leagueoflegends.com/cdn/15.24.1/img/champion/Jax.png"
               class="card-img-top"
               alt="Jax"
+              loading="lazy"
             />
 
             <div class="card-body">
@@ -277,6 +252,7 @@
               src="https://ddragon.leagueoflegends.com/cdn/15.24.1/img/champion/Jinx.png"
               class="card-img-top"
               alt="Jinx"
+              loading="lazy"
             />
 
             <div class="card-body">
@@ -288,35 +264,66 @@
       </div>
     </section>
 
-    <!-- 4. 최신 뉴스 영역 -->
-    <section id="news" class="container my-5">
-      <h2 class="text-center mb-4 accent-red">최신 뉴스</h2>
+    <!-- ===== 검색 결과 섹션 (기본 숨김) ===== -->
+    <section id="searchResults">
+      <!-- 키워드 헤더 -->
+      <div class="search-keyword-header">
+        <h1 id="searchKeywordDisplay"></h1>
+      </div>
 
-      <div class="row g-4">
-        <div class="col-md-6 col-lg-4">
-          <div class="card h-100">
-            <div class="card-body">
-              <h5 class="card-title">새로운 챔피언 출시</h5>
-              <p class="card-text">2026 루나 레벨 이벤트가 시작되었습니다.</p>
-              <a href="#" class="btn btn-outline-light">더 보기</a>
+      <!-- 본문: 사이드바 + 콘텐츠 -->
+      <div class="search-body">
+        <div class="container-fluid px-0">
+          <div class="row g-0">
+            <!-- 왼쪽 카테고리 사이드바 -->
+            <div class="col-md-3 col-lg-2 search-sidebar bg-white py-4">
+              <div
+                class="px-3 mb-3"
+                style="
+                  font-size: 0.8rem;
+                  color: #999;
+                  text-transform: uppercase;
+                  letter-spacing: 0.1em;
+                "
+              >
+                카테고리
+              </div>
+
+              <div
+                class="search-category-item active"
+                onclick="switchCategory('champion', this)"
+              >
+                챔피언 <span class="count" id="champCount">(0)</span>
+              </div>
+
+              <div
+                class="search-category-item"
+                onclick="switchCategory('news', this)"
+              >
+                뉴스 <span class="count" id="newsCount">(0)</span>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div class="col-md-6 col-lg-4">
-          <div class="card h-100">
-            <div class="card-body">
-              <h5 class="card-title">패치 노트</h5>
-              <p class="card-text">
-                챔피언 밸런스와 아이템이 업데이트되었습니다.
-              </p>
-              <a href="#" class="btn btn-outline-light">더 보기</a>
+            <!-- 오른쪽 콘텐츠 -->
+            <div class="col-md-9 col-lg-10 search-content-area">
+              <!-- 챔피언 결과 -->
+              <div id="resultChampion">
+                <h5 class="mb-4" style="color: #333">챔피언</h5>
+                <div id="championResultList"></div>
+              </div>
+
+              <!-- 뉴스 결과 -->
+              <div id="resultNews" style="display: none">
+                <h5 class="mb-4" style="color: #333">뉴스</h5>
+                <div id="newsResultList"></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <!-- Aatrox 상세 정보 모달: iframe 방식 -->
+
+    <!-- Aatrox 상세 정보 모달 -->
     <div
       class="modal fade"
       id="modalAatrox"
@@ -341,7 +348,6 @@
             ></button>
           </div>
 
-          <!-- 모달 안에 별도 HTML 파일을 불러오는 영역 -->
           <div
             class="modal-body p-0"
             style="height: 65vh; background-color: #0a0e17"
@@ -366,7 +372,7 @@
         </div>
       </div>
     </div>
-    <!-- Bootstrap 5 JS 연결: 드롭다운 메뉴 동작에 필요 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/search.js"></script>
   </body>
 </html>
