@@ -19,6 +19,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -49,14 +50,12 @@ public class AuthResource {
 
         User user = User.findByUsername(username);
 
-        // 12주차 마무리 과제: 로그인 실패 시 login 페이지에 error 파라미터 전달
         if (user == null || !user.password.equals(password)) {
             return Response
                     .seeOther(URI.create("/login/?error=1"))
                     .build();
         }
 
-        // 로그인 성공 시 세션에 사용자 아이디 저장
         context.session().put("loginUser", username);
 
         return Response
@@ -151,7 +150,102 @@ public class AuthResource {
                 .build();
     }
 
-    // 12주차 마무리 과제: 프로필 이미지 업로드 성공/실패 처리
+    // 13주차 14페이지: 회원정보 수정 엔드포인트
+    @POST
+    @Path("/profile/update")
+    @Transactional
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response profileUpdate(
+            @FormParam("email") String email,
+            @FormParam("phone") String phone) {
+
+        if (context.session() == null || context.session().get("loginUser") == null) {
+            return Response
+                    .seeOther(URI.create("/login"))
+                    .build();
+        }
+
+        String loginUser = context.session().get("loginUser");
+
+        User found = User.findByEmail(email);
+
+        if (found != null && !found.username.equals(loginUser)) {
+            return Response
+                    .seeOther(URI.create("/profile?error=duplicate_email"))
+                    .build();
+        }
+
+        User user = User.findByUsername(loginUser);
+
+        if (user == null) {
+            return Response
+                    .seeOther(URI.create("/login"))
+                    .build();
+        }
+
+        user.email = email;
+        user.phone = phone;
+
+        context.session().put("email", user.email);
+        context.session().put("phone", user.phone);
+
+        return Response
+                .seeOther(URI.create("/profile?success=updated"))
+                .build();
+    }
+
+    // 13주차 19페이지: 비밀번호 변경 엔드포인트
+    @POST
+    @Path("/profile/password")
+    @Transactional
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response changePassword(
+            @FormParam("currentPassword") String currentPassword,
+            @FormParam("newPassword") String newPassword) {
+
+        // 세션 체크
+        if (context.session() == null || context.session().get("loginUser") == null) {
+            return Response
+                    .seeOther(URI.create("/login"))
+                    .build();
+        }
+
+        String loginUser = context.session().get("loginUser");
+        User user = User.findByUsername(loginUser);
+
+        if (user == null) {
+            return Response
+                    .seeOther(URI.create("/login"))
+                    .build();
+        }
+
+        try {
+            // 현재 비밀번호가 DB 비밀번호와 다르면 실패
+            if (currentPassword == null || !user.password.equals(currentPassword)) {
+                return Response
+                        .seeOther(URI.create("/profile?error=wrong_password"))
+                        .build();
+            }
+
+            // 새 비밀번호 저장
+            user.password = newPassword;
+
+            // 13주차 23페이지:
+            // 비밀번호 변경 성공 후 바로 로그아웃하지 않고,
+            // 프로필 페이지에서 Toast를 먼저 보여준 뒤 profile.js에서 /logout?next=login으로 이동한다.
+            return Response
+                    .seeOther(URI.create("/profile?success=password_changed"))
+                    .build();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return Response
+                    .seeOther(URI.create("/profile?error=password_fail"))
+                    .build();
+        }
+    }
+
     @POST
     @Path("/profile/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -182,7 +276,6 @@ public class AuthResource {
             String originalFileName = profileImage.fileName();
             String lowerFileName = originalFileName.toLowerCase();
 
-            // 이미지 확장자만 허용
             boolean validImageType = lowerFileName.endsWith(".jpg")
                     || lowerFileName.endsWith(".jpeg")
                     || lowerFileName.endsWith(".png")
@@ -195,7 +288,6 @@ public class AuthResource {
                         .build();
             }
 
-            // 5MB 초과 업로드 차단
             long fileSize = Files.size(profileImage.uploadedFile());
             long maxSize = 5 * 1024 * 1024;
 
@@ -220,7 +312,6 @@ public class AuthResource {
                     savePath,
                     StandardCopyOption.REPLACE_EXISTING);
 
-            // DB 업데이트
             user.profileImage = savedFileName;
             user.persist();
 
@@ -301,12 +392,19 @@ public class AuthResource {
 
     @GET
     @Path("/logout")
-    public Response logout() {
+    public Response logout(@QueryParam("next") String next) {
         if (context.session() != null) {
             System.out.println("=== 로그아웃 전 세션 ID : " + context.session().id());
             System.out.println("=== 로그아웃 전 loginUser : " + context.session().get("loginUser"));
 
             context.session().destroy();
+        }
+
+        // 13주차 23페이지: 비밀번호 변경 후에는 로그인 페이지로 이동
+        if ("login".equals(next)) {
+            return Response
+                    .seeOther(URI.create("/login"))
+                    .build();
         }
 
         return Response

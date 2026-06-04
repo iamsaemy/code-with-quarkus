@@ -22,16 +22,34 @@ function clearLoginError(inputEl, msgEl) {
   msgEl.textContent = "";
 }
 
-// 12주차 마무리 과제: 로그인 실패 메시지 출력
+// 로그인 페이지 상단 메시지 출력
+function showLoginPageMessage(message, type = "success") {
+  const loginForm = document.getElementById("loginForm");
+
+  if (!loginForm) {
+    return;
+  }
+
+  const msgBox = document.createElement("div");
+  msgBox.className = `alert alert-${type} text-center mb-3`;
+  msgBox.textContent = message;
+
+  // 로그인 폼 맨 위에 메시지 삽입
+  loginForm.prepend(msgBox);
+}
+
+// 12주차 마무리 과제 + 13주차 21페이지: 로그인 페이지 메시지 처리
 window.addEventListener("load", function () {
   const params = new URLSearchParams(window.location.search);
   const error = params.get("error");
+  const success = params.get("success");
 
   const usernameInput = document.getElementById("usernameInput");
   const passwordInput = document.getElementById("passwordInput");
   const usernameMsg = document.getElementById("usernameMsg");
   const passwordMsg = document.getElementById("passwordMsg");
 
+  // 로그인 실패 메시지
   if (error === "1") {
     showLoginError(
       usernameInput,
@@ -43,6 +61,14 @@ window.addEventListener("load", function () {
       passwordInput,
       passwordMsg,
       "아이디 또는 패스워드가 올바르지 않습니다.",
+    );
+  }
+
+  // 13주차 21페이지: 비밀번호 변경 성공 메시지
+  if (success === "password_changed") {
+    showLoginPageMessage(
+      "비밀번호가 변경되었습니다. 새 비밀번호로 다시 로그인해주세요.",
+      "success",
     );
   }
 });
