@@ -2,6 +2,13 @@ package org.acme.login;
 
 import java.io.InputStream;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.util.Map;
+import java.util.UUID;
+
+import org.jboss.resteasy.reactive.RestForm;
+import org.jboss.resteasy.reactive.multipart.FileUpload;
 
 import io.vertx.ext.web.RoutingContext;
 import jakarta.inject.Inject;
@@ -42,9 +49,10 @@ public class AuthResource {
 
         User user = User.findByUsername(username);
 
+        // 12주차 마무리 과제: 로그인 실패 시 login 페이지에 error 파라미터 전달
         if (user == null || !user.password.equals(password)) {
             return Response
-                    .seeOther(URI.create("/login/login_failed.html"))
+                    .seeOther(URI.create("/login/?error=1"))
                     .build();
         }
 
@@ -60,7 +68,6 @@ public class AuthResource {
     @Path("/after_login")
     @Produces(MediaType.TEXT_HTML)
     public Response afterLogin() {
-        // 세션 기능이 없거나 로그인 정보가 없으면 로그인 페이지로 이동
         if (context.session() == null || context.session().get("loginUser") == null) {
             return Response
                     .seeOther(URI.create("/login"))
@@ -80,6 +87,161 @@ public class AuthResource {
     }
 
     @GET
+    @Path("/profile")
+    @Produces(MediaType.TEXT_HTML)
+    public Response profilePage() {
+        if (context.session() == null || context.session().get("loginUser") == null) {
+            return Response
+                    .seeOther(URI.create("/login"))
+                    .build();
+        }
+
+        String loginUser = context.session().get("loginUser");
+        User user = User.findByUsername(loginUser);
+
+        if (user == null) {
+            return Response
+                    .seeOther(URI.create("/login"))
+                    .build();
+        }
+
+        context.session().put("username", user.username);
+        context.session().put("email", user.email);
+        context.session().put("phone", user.phone);
+        context.session().put("profileImage", user.profileImage);
+
+        InputStream html = getClass()
+                .getClassLoader()
+                .getResourceAsStream("META-INF/resources/login/profile.html");
+
+        return Response.ok(html).build();
+    }
+
+    @GET
+    @Path("/profile/info")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response profileInfo() {
+        if (context.session() == null || context.session().get("loginUser") == null) {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity(Map.of("error", "login_required"))
+                    .build();
+        }
+
+        String loginUser = context.session().get("loginUser");
+        User user = User.findByUsername(loginUser);
+
+        if (user == null) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .entity(Map.of("error", "user_not_found"))
+                    .build();
+        }
+
+        String email = user.email == null ? "" : user.email;
+        String phone = user.phone == null ? "" : user.phone;
+        String profileImage = user.profileImage == null ? "" : user.profileImage;
+
+        return Response.ok(
+                Map.of(
+                        "username", user.username,
+                        "email", email,
+                        "phone", phone,
+                        "profileImage", profileImage))
+                .build();
+    }
+
+    // 12주차 마무리 과제: 프로필 이미지 업로드 성공/실패 처리
+    @POST
+    @Path("/profile/upload")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Transactional
+    public Response uploadProfileImage(@RestForm("profileImage") FileUpload profileImage) {
+        if (context.session() == null || context.session().get("loginUser") == null) {
+            return Response
+                    .seeOther(URI.create("/login"))
+                    .build();
+        }
+
+        if (profileImage == null || profileImage.fileName() == null || profileImage.fileName().isBlank()) {
+            return Response
+                    .seeOther(URI.create("/profile?error=upload_fail"))
+                    .build();
+        }
+
+        String loginUser = context.session().get("loginUser");
+        User user = User.findByUsername(loginUser);
+
+        if (user == null) {
+            return Response
+                    .seeOther(URI.create("/login"))
+                    .build();
+        }
+
+        try {
+            String originalFileName = profileImage.fileName();
+            String lowerFileName = originalFileName.toLowerCase();
+
+            // 이미지 확장자만 허용
+            boolean validImageType = lowerFileName.endsWith(".jpg")
+                    || lowerFileName.endsWith(".jpeg")
+                    || lowerFileName.endsWith(".png")
+                    || lowerFileName.endsWith(".gif")
+                    || lowerFileName.endsWith(".webp");
+
+            if (!validImageType) {
+                return Response
+                        .seeOther(URI.create("/profile?error=invalid_type"))
+                        .build();
+            }
+
+            // 5MB 초과 업로드 차단
+            long fileSize = Files.size(profileImage.uploadedFile());
+            long maxSize = 5 * 1024 * 1024;
+
+            if (fileSize > maxSize) {
+                return Response
+                        .seeOther(URI.create("/profile?error=too_large"))
+                        .build();
+            }
+
+            String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+            String savedFileName = loginUser + "_" + UUID.randomUUID() + extension;
+
+            java.nio.file.Path uploadDir = java.nio.file.Path.of(
+                    "src/main/resources/META-INF/resources/uploads/profile");
+
+            Files.createDirectories(uploadDir);
+
+            java.nio.file.Path savePath = uploadDir.resolve(savedFileName);
+
+            Files.copy(
+                    profileImage.uploadedFile(),
+                    savePath,
+                    StandardCopyOption.REPLACE_EXISTING);
+
+            // DB 업데이트
+            user.profileImage = savedFileName;
+            user.persist();
+
+            context.session().put("profileImage", savedFileName);
+
+            System.out.println("=== 프로필 이미지 업로드 완료 : " + savedFileName);
+
+            return Response
+                    .seeOther(URI.create("/profile"))
+                    .build();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return Response
+                    .seeOther(URI.create("/profile?error=upload_fail"))
+                    .build();
+        }
+    }
+
+    @GET
     @Path("/register")
     @Produces(MediaType.TEXT_HTML)
     public Response registerPage() {
@@ -91,15 +253,15 @@ public class AuthResource {
     }
 
     @GET
-@Path("/register_success")
-@Produces(MediaType.TEXT_HTML)
-public Response registerSuccessPage() {
-    InputStream html = getClass()
-            .getClassLoader()
-            .getResourceAsStream("META-INF/resources/login/register_success.html");
+    @Path("/register_success")
+    @Produces(MediaType.TEXT_HTML)
+    public Response registerSuccessPage() {
+        InputStream html = getClass()
+                .getClassLoader()
+                .getResourceAsStream("META-INF/resources/login/register_success.html");
 
-    return Response.ok(html).build();
-}
+        return Response.ok(html).build();
+    }
 
     @POST
     @Path("/register_check")
@@ -112,29 +274,26 @@ public Response registerSuccessPage() {
             @FormParam("email") String email,
             @FormParam("phone") String phone) {
 
-        // ① 아이디 중복 체크
         if (User.findByUsername(username) != null) {
             return Response
                     .seeOther(URI.create("/register?error=duplicate_username"))
                     .build();
         }
 
-        // ② 이메일 중복 체크
         if (User.findByEmail(email) != null) {
             return Response
                     .seeOther(URI.create("/register?error=duplicate_email"))
                     .build();
         }
 
-        // ③ DB 삽입
         User newUser = new User();
         newUser.username = username;
         newUser.password = password;
         newUser.email = email;
         newUser.phone = phone;
+        newUser.profileImage = null;
         newUser.persist();
 
-        // ④ 가입 완료 페이지로 이동
         return Response
                 .seeOther(URI.create("/register_success"))
                 .build();

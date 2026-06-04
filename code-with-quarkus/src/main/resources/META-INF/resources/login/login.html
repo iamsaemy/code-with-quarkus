@@ -62,9 +62,9 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="/main_page_sub/download.html"
-                >다운로드</a
-              >
+              <a class="nav-link" href="/main_page_sub/download.html">
+                다운로드
+              </a>
             </li>
 
             <li class="nav-item">
@@ -82,30 +82,52 @@
       <div class="container" style="max-width: 400px">
         <h2 class="fw-bold mb-4">로그인</h2>
 
-        <form method="POST" action="/login_check">
+        <!-- 
+          11주차 20페이지 핵심
+          id="loginForm" 추가
+          password는 사용자가 입력하는 원본 비밀번호
+          hidden password는 SHA-256 해시값을 서버로 전송
+        -->
+        <form method="POST" action="/login_check" id="loginForm">
+          <!-- 아이디 -->
           <div class="mb-3 text-start">
             <label class="form-label">아이디</label>
             <input
               type="text"
               class="form-control"
+              id="usernameInput"
               name="username"
-              placeholder="아이디 입력"
+              placeholder="4~20자 영문/숫자"
               required
             />
+            <div class="invalid-feedback" id="usernameMsg"></div>
           </div>
 
+          <!-- 패스워드 -->
           <div class="mb-3 text-start">
             <label class="form-label">패스워드</label>
             <input
               type="password"
               class="form-control"
-              name="password"
-              placeholder="패스워드 입력"
+              id="passwordInput"
+              placeholder="8자 이상, 영문+숫자+특수문자"
               required
             />
+            <div class="invalid-feedback" id="passwordMsg"></div>
+
+            <!-- 서버로 실제 전송되는 비밀번호: SHA-256 해시값 -->
+            <input type="hidden" id="password" name="password" />
           </div>
 
-          <button type="submit" class="btn btn-primary w-100">로그인</button>
+          <!-- type="submit" 아님. JS 검사 후 submit 처리 -->
+          <button
+            type="button"
+            onclick="validateAndLogin()"
+            class="btn btn-primary w-100"
+          >
+            로그인
+          </button>
+
           <hr />
 
           <a href="/register" class="btn btn-outline-secondary w-100">
@@ -120,5 +142,9 @@
 
     <!-- 다크/라이트 모드 JS -->
     <script src="../js/toggle.js"></script>
+
+    <!-- 11주차 20페이지: 로그인 암호화 체크 JS -->
+    <script src="../js/input_sha256.js"></script>
+    <script src="../js/login.js"></script>
   </body>
 </html>
