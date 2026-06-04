@@ -1,22 +1,35 @@
 package org.acme.login;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "users") // MySQL에서 user는 예약어처럼 충돌 가능성이 있어서 users 사용
+@Table(name = "users")
 public class User extends PanacheEntity {
 
-    // 사용자 아이디
+    // 아이디
+    @Column(unique = true)
     public String username;
 
-    // 사용자 패스워드
-    // 10주차에서는 실습용으로 평문 저장
+    // 비밀번호: 이후 SHA-256 해시값 저장
     public String password;
 
-    // username으로 사용자 1명 조회
+    // 이메일: 중복 방지
+    @Column(unique = true)
+    public String email;
+
+    // 연락처
+    public String phone;
+
+    // 아이디로 사용자 조회
     public static User findByUsername(String username) {
         return find("username", username).firstResult();
+    }
+
+    // 이메일로 사용자 조회
+    public static User findByEmail(String email) {
+        return find("email", email).firstResult();
     }
 }

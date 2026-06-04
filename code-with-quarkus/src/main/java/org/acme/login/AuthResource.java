@@ -80,6 +80,67 @@ public class AuthResource {
     }
 
     @GET
+    @Path("/register")
+    @Produces(MediaType.TEXT_HTML)
+    public Response registerPage() {
+        InputStream html = getClass()
+                .getClassLoader()
+                .getResourceAsStream("META-INF/resources/login/register.html");
+
+        return Response.ok(html).build();
+    }
+
+    @GET
+@Path("/register_success")
+@Produces(MediaType.TEXT_HTML)
+public Response registerSuccessPage() {
+    InputStream html = getClass()
+            .getClassLoader()
+            .getResourceAsStream("META-INF/resources/login/register_success.html");
+
+    return Response.ok(html).build();
+}
+
+    @POST
+    @Path("/register_check")
+    @Transactional
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.TEXT_HTML)
+    public Response registerCheck(
+            @FormParam("username") String username,
+            @FormParam("password") String password,
+            @FormParam("email") String email,
+            @FormParam("phone") String phone) {
+
+        // ① 아이디 중복 체크
+        if (User.findByUsername(username) != null) {
+            return Response
+                    .seeOther(URI.create("/register?error=duplicate_username"))
+                    .build();
+        }
+
+        // ② 이메일 중복 체크
+        if (User.findByEmail(email) != null) {
+            return Response
+                    .seeOther(URI.create("/register?error=duplicate_email"))
+                    .build();
+        }
+
+        // ③ DB 삽입
+        User newUser = new User();
+        newUser.username = username;
+        newUser.password = password;
+        newUser.email = email;
+        newUser.phone = phone;
+        newUser.persist();
+
+        // ④ 가입 완료 페이지로 이동
+        return Response
+                .seeOther(URI.create("/register_success"))
+                .build();
+    }
+
+    @GET
     @Path("/logout")
     public Response logout() {
         if (context.session() != null) {
