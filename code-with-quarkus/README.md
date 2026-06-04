@@ -75,3 +75,56 @@ http://localhost:8080/
 - 챔피언/뉴스 카테고리 전환 기능 구현
 - 추가 구현: 챔피언 데이터 3개 이상 추가
 - 추가 구현: 검색어가 없거나 공백일 때 메인화면으로 복귀
+
+## 실행 화면
+
+### 메인 페이지
+
+![메인 페이지](screenshots/main-page.png)
+
+### 다운로드 페이지
+
+![다운로드 페이지](screenshots/download-page.png)
+
+### 챔피언 모달 화면
+
+![챔피언 모달 화면](screenshots/aatrox-modal.png)
+
+---
+
+## 9주차 수업 내용
+
+### 1. JavaScript 기능 추가
+
+- `test2.js`를 활용하여 배열과 객체 배열의 성능 테스트를 진행하였다.
+- `toggle.js`를 추가하여 다크 모드와 라이트 모드 전환 기능을 구현하였다.
+- 검색 결과 챔피언 카드를 클릭하면 기존 상세보기 모달창이 열리도록 수정하였다.
+
+### 2. MySQL 데이터베이스 연동
+
+- MySQL Server 8.x를 설치하고 `lol` 데이터베이스를 생성하였다.
+- `pom.xml`에 MySQL JDBC, Hibernate ORM Panache, REST Jackson 의존성을 추가하였다.
+- `application.properties`에 MySQL 접속 정보를 설정하였다.
+- Quarkus Dev UI와 VS Code DB 확장 기능을 통해 데이터베이스 연결을 확인하였다.
+
+### 3. 챔피언 테이블 및 API 구현
+
+- `Champion.java` 파일을 생성하여 `champions` 테이블과 Java 클래스를 매핑하였다.
+- `ChampionResource.java` 파일을 생성하여 `/champions` API를 구현하였다.
+- `DataSeeder.java` 파일을 생성하여 초기 챔피언 데이터를 데이터베이스에 삽입하였다.
+
+### 4. 검색 기능 DB 연동
+
+- 기존 `search.js`의 고정 챔피언 배열 대신 `/champions` API에서 데이터를 불러오도록 수정하였다.
+- 검색창에서 챔피언 이름, 영어 이름, 역할, 라인을 기준으로 검색되도록 구현하였다.
+- 검색 결과 화면에서 MySQL 데이터베이스에 저장된 챔피언 정보가 정상 출력되는 것을 확인하였다.
+
+### 9주차 실행 화면
+
+#### 9주차 메인 페이지
+
+![9주차 메인 페이지](screenshots/week9-main.png)
+
+#### 9주차 MySQL 챔피언 데이터 확인
+
+![9주차 MySQL 챔피언 데이터 확인](screenshots/week9-sql.png)

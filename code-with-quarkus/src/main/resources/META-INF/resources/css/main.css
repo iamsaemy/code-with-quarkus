@@ -136,3 +136,45 @@ body {
     transform 0.3s,
     box-shadow 0.3s;
 }
+/* ── 9주차 11페이지: 테마 토글 버튼 ───────────────────────────── */
+#themeToggleBtn {
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+body.light-mode #themeToggleBtn {
+  color: #212529;
+}
+
+/* ── 9주차 11페이지: 라이트 모드 스타일 ───────────────────────── */
+body.light-mode {
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+body.light-mode .navbar {
+  background-color: #e9ecef !important;
+}
+
+body.light-mode .navbar .navbar-brand,
+body.light-mode .navbar .nav-link {
+  color: #212529 !important;
+}
+
+body.light-mode .hero {
+  background: linear-gradient(to bottom, #dce3ea, #f8f9fa);
+}
+
+body.light-mode .card {
+  background-color: #ffffff;
+  color: #212529;
+  border: 1px solid #dee2e6;
+}
+
+body.light-mode .card-title {
+  color: #212529;
+}
+
+body.light-mode .card-text {
+  color: #555;
+}

@@ -1,79 +1,27 @@
 // ── 챔피언 데이터 ──────────────────────────────────────────────
-// 객체 배열: 챔피언 한 명당 하나의 객체로 관리한다.
-const CHAMPIONS = [
-  {
-    name: "아트록스",
-    engName: "Aatrox",
-    role: "전사",
-    lane: "탑",
-    img: "images/Aatrox.png",
-    difficulty: "상",
-  },
-  {
-    name: "사일러스",
-    engName: "Sylas",
-    role: "마법사",
-    lane: "정글/미드",
-    img: "https://ddragon.leagueoflegends.com/cdn/15.24.1/img/champion/Sylas.png",
-    difficulty: "중",
-  },
-  {
-    name: "애니비아",
-    engName: "Anivia",
-    role: "마법사",
-    lane: "미드",
-    img: "https://ddragon.leagueoflegends.com/cdn/15.24.1/img/champion/Anivia.png",
-    difficulty: "상",
-  },
-  {
-    name: "브라이어",
-    engName: "Briar",
-    role: "전사",
-    lane: "정글",
-    img: "https://ddragon.leagueoflegends.com/cdn/15.24.1/img/champion/Briar.png",
-    difficulty: "중",
-  },
-  {
-    name: "잭스",
-    engName: "Jax",
-    role: "전사",
-    lane: "탑",
-    img: "https://ddragon.leagueoflegends.com/cdn/15.24.1/img/champion/Jax.png",
-    difficulty: "하",
-  },
-  {
-    name: "징크스",
-    engName: "Jinx",
-    role: "원거리딜러",
-    lane: "원딜",
-    img: "https://ddragon.leagueoflegends.com/cdn/15.24.1/img/champion/Jinx.png",
-    difficulty: "중",
-  },
-  {
-    name: "야스오",
-    engName: "Yasuo",
-    role: "전사",
-    lane: "미드/탑",
-    img: "https://ddragon.leagueoflegends.com/cdn/15.24.1/img/champion/Yasuo.png",
-    difficulty: "상",
-  },
-  {
-    name: "리 신",
-    engName: "Lee Sin",
-    role: "전사",
-    lane: "정글",
-    img: "https://ddragon.leagueoflegends.com/cdn/15.24.1/img/champion/LeeSin.png",
-    difficulty: "상",
-  },
-  {
-    name: "티모",
-    engName: "Teemo",
-    role: "마법사",
-    lane: "탑",
-    img: "https://ddragon.leagueoflegends.com/cdn/15.24.1/img/champion/Teemo.png",
-    difficulty: "하",
-  },
-];
+// DB에서 불러온 챔피언 데이터를 저장할 배열
+let CHAMPIONS = [];
+
+// 서버 DB에서 챔피언 목록 불러오기
+fetch("/champions")
+  .then((response) => response.json())
+  .then((data) => {
+    // DB 컬럼 line을 기존 검색 코드에서 쓰던 lane 이름으로 맞춰준다.
+    CHAMPIONS = data.map((c) => ({
+      id: c.id,
+      name: c.name,
+      engName: c.engName,
+      role: c.role,
+      lane: c.line,
+      img: c.img,
+      difficulty: c.difficulty,
+    }));
+
+    console.log("DB 챔피언 데이터 불러오기 성공:", CHAMPIONS);
+  })
+  .catch((error) => {
+    console.error("챔피언 데이터 불러오기 실패:", error);
+  });
 
 // ── 뉴스 데이터 ──────────────────────────────────────────────
 // 객체 배열: 뉴스 한 개당 하나의 객체로 관리한다.
@@ -152,7 +100,9 @@ function performSearch(query) {
     champList.innerHTML = champResults
       .map(
         (c) => `
-          <div class="search-result-card d-flex align-items-center p-0 overflow-hidden">
+          <div class="search-result-card champion-card d-flex align-items-center p-0 overflow-hidden"
+               data-champion="${c.engName}"
+               style="cursor:pointer;">
             <img src="${c.img}" alt="${c.name}">
             <div class="p-3">
               <div style="font-weight:700; font-size:1rem; color:#111;">
@@ -169,6 +119,13 @@ function performSearch(query) {
         `,
       )
       .join("");
+
+    // 검색 결과 챔피언 카드를 클릭하면 기존 모달창 열기
+    document.querySelectorAll(".champion-card").forEach((card) => {
+      card.addEventListener("click", function () {
+        openChampionModal(this.dataset.champion);
+      });
+    });
   }
 
   // ── 뉴스 검색 결과 화면 출력 ─────────────────────────────
@@ -253,6 +210,21 @@ function showMainScreen() {
   // 검색창 비우기
   document.getElementById("searchInput").value = "";
 }
+
+// ── 검색 결과 챔피언 클릭 시 기존 모달창 열기 ─────────────────
+function openChampionModal(engName) {
+  const modalId = `modal${engName.replace(/\s/g, "")}`;
+  const modalElement = document.getElementById(modalId);
+
+  if (!modalElement) {
+    console.warn("해당 챔피언 모달을 찾을 수 없습니다:", modalId);
+    return;
+  }
+
+  const modal = new bootstrap.Modal(modalElement);
+  modal.show();
+}
+
 // ── 검색 폼 이벤트 등록 ───────────────────────────────────────
 // 검색 버튼 클릭 또는 Enter 입력 시 performSearch 함수 실행
 document.getElementById("searchForm").addEventListener("submit", function (e) {
