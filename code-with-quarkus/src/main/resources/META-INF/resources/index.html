@@ -52,7 +52,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/index.html">메인화면</a>
+              <a class="nav-link active" href="/index.html">메인화면</a>
             </li>
 
             <li class="nav-item">
@@ -149,6 +149,7 @@
         <p class="lead">
           적의 넥서스를 파괴하세요! 5v5 MOBA 전투에서 팀과 함께 승리하세요.
         </p>
+
         <button
           type="button"
           class="btn btn-primary btn-lg"
@@ -156,6 +157,117 @@
         >
           무료 플레이
         </button>
+      </div>
+    </section>
+
+    <!-- 추가 구현 기능 10: 메인화면 챔피언 데이터 통계 -->
+    <section id="mainChampionStats" class="container my-5">
+      <div class="card bg-dark text-white border-secondary">
+        <div class="card-body">
+          <h2 class="text-center mb-3">📊 챔피언 데이터 통계</h2>
+
+          <p class="text-center mb-4" style="color: #cfcfcf">
+            DB에 저장된 챔피언 데이터를 기준으로 전체 챔피언 수, 라인별 수,
+            난이도별 수를 메인화면에서 확인할 수 있습니다.
+          </p>
+
+          <div id="mainChampionStatsResult">
+            <div class="alert alert-secondary mb-0 text-center">
+              챔피언 통계를 불러오는 중입니다.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 추가 구현 기능 8: 메인화면 오늘의 랜덤 챔피언 -->
+    <section id="mainRandomChampion" class="container my-5">
+      <div class="card bg-dark text-white border-secondary">
+        <div class="card-body">
+          <h2 class="text-center mb-3">🎲 오늘의 랜덤 챔피언</h2>
+
+          <p class="text-center mb-4" style="color: #cfcfcf">
+            DB에 저장된 챔피언 중 하나를 랜덤으로 뽑아 메인화면에서 추천합니다.
+          </p>
+
+          <div class="text-center mb-4">
+            <button
+              type="button"
+              class="btn btn-warning px-5"
+              onclick="loadMainRandomChampion()"
+            >
+              오늘의 챔피언 뽑기
+            </button>
+          </div>
+
+          <div id="mainRandomChampionResult">
+            <div class="alert alert-secondary mb-0 text-center">
+              오늘의 챔피언 뽑기 버튼을 눌러보세요.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 추가 구현 기능 9: 메인화면 라인별 빠른 추천 -->
+    <section id="mainLineRecommend" class="container my-5">
+      <div class="card bg-dark text-white border-secondary">
+        <div class="card-body">
+          <h2 class="text-center mb-3">⚡ 라인별 빠른 챔피언 추천</h2>
+
+          <p class="text-center mb-4" style="color: #cfcfcf">
+            원하는 라인을 빠르게 선택하면 DB에 저장된 챔피언 중 해당 라인에 맞는
+            챔피언을 추천합니다.
+          </p>
+
+          <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+            <button
+              type="button"
+              class="btn btn-outline-warning"
+              onclick="loadMainLineRecommend('탑')"
+            >
+              탑 추천
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-outline-success"
+              onclick="loadMainLineRecommend('정글')"
+            >
+              정글 추천
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-outline-info"
+              onclick="loadMainLineRecommend('미드')"
+            >
+              미드 추천
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              onclick="loadMainLineRecommend('원딜')"
+            >
+              원딜 추천
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-outline-light"
+              onclick="loadMainLineRecommend('서폿')"
+            >
+              서폿 추천
+            </button>
+          </div>
+
+          <div id="mainLineRecommendResult">
+            <div class="alert alert-secondary mb-0 text-center">
+              위 버튼 중 하나를 눌러 라인별 추천 챔피언을 확인해보세요.
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 

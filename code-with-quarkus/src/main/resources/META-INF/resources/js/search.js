@@ -24,9 +24,21 @@ fetch("/champions")
 
     // 챔피언 데이터를 불러온 뒤 즐겨찾기 정보도 같이 불러온다.
     loadFavoriteIds();
+
+    // 추가 구현 기능 10: 메인화면 챔피언 데이터 통계 표시
+    renderMainChampionStats();
   })
   .catch((error) => {
     console.error("챔피언 데이터 불러오기 실패:", error);
+
+    const statsBox = document.getElementById("mainChampionStatsResult");
+    if (statsBox) {
+      statsBox.innerHTML = `
+        <div class="alert alert-danger mb-0 text-center">
+          챔피언 통계를 불러오는 중 오류가 발생했습니다.
+        </div>
+      `;
+    }
   });
 
 // ── 로그인 사용자의 즐겨찾기 챔피언 ID 목록 불러오기 ─────────────
@@ -85,6 +97,126 @@ function normalizeImagePath(img) {
   }
 
   return "/" + img;
+}
+
+// ─────────────────────────────────────────────
+// 추가 구현 기능 10: 메인화면 챔피언 데이터 통계
+// ─────────────────────────────────────────────
+function renderMainChampionStats() {
+  const statsBox = document.getElementById("mainChampionStatsResult");
+
+  if (!statsBox) return;
+
+  if (!CHAMPIONS || CHAMPIONS.length === 0) {
+    statsBox.innerHTML = `
+      <div class="alert alert-secondary mb-0 text-center">
+        통계를 표시할 챔피언 데이터가 없습니다.
+      </div>
+    `;
+    return;
+  }
+
+  const totalCount = CHAMPIONS.length;
+
+  const topCount = countChampionsByLine("탑");
+  const jungleCount = countChampionsByLine("정글");
+  const midCount = countChampionsByLine("미드");
+  const adcCount = countChampionsByLine("원딜");
+  const supportCount = countChampionsByLine("서폿");
+
+  const easyCount = countChampionsByDifficulty("하");
+  const normalCount = countChampionsByDifficulty("중");
+  const hardCount = countChampionsByDifficulty("상");
+
+  statsBox.innerHTML = `
+    <div class="row text-center g-3">
+      <div class="col-md-3 col-6">
+        <div class="bg-light text-dark rounded p-3 h-100">
+          <div class="fw-bold fs-3">${totalCount}</div>
+          <div class="small text-secondary">전체 챔피언</div>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-6">
+        <div class="bg-light text-dark rounded p-3 h-100">
+          <div class="fw-bold fs-3">${topCount}</div>
+          <div class="small text-secondary">탑 라인</div>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-6">
+        <div class="bg-light text-dark rounded p-3 h-100">
+          <div class="fw-bold fs-3">${jungleCount}</div>
+          <div class="small text-secondary">정글 라인</div>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-6">
+        <div class="bg-light text-dark rounded p-3 h-100">
+          <div class="fw-bold fs-3">${midCount}</div>
+          <div class="small text-secondary">미드 라인</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row text-center g-3 mt-1">
+      <div class="col-md-3 col-6">
+        <div class="bg-light text-dark rounded p-3 h-100">
+          <div class="fw-bold fs-3">${adcCount}</div>
+          <div class="small text-secondary">원딜 라인</div>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-6">
+        <div class="bg-success text-white rounded p-3 h-100">
+          <div class="fw-bold fs-3">${easyCount}</div>
+          <div class="small">난이도 하</div>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-6">
+        <div class="bg-warning text-dark rounded p-3 h-100">
+          <div class="fw-bold fs-3">${normalCount}</div>
+          <div class="small">난이도 중</div>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-6">
+        <div class="bg-danger text-white rounded p-3 h-100">
+          <div class="fw-bold fs-3">${hardCount}</div>
+          <div class="small">난이도 상</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-info mt-3 mb-0 text-center">
+      DB에서 불러온 챔피언 데이터를 JavaScript로 분석하여 통계로 표시했습니다.
+    </div>
+  `;
+
+  console.log("메인화면 챔피언 통계:", {
+    totalCount,
+    topCount,
+    jungleCount,
+    midCount,
+    adcCount,
+    supportCount,
+    easyCount,
+    normalCount,
+    hardCount,
+  });
+}
+
+function countChampionsByLine(line) {
+  return CHAMPIONS.filter((champion) => {
+    if (!champion.lane) return false;
+    return champion.lane.includes(line);
+  }).length;
+}
+
+function countChampionsByDifficulty(difficulty) {
+  return CHAMPIONS.filter((champion) => champion.difficulty === difficulty)
+    .length;
 }
 
 // ─────────────────────────────────────────────
