@@ -82,7 +82,7 @@
     <section
       class="hero d-flex align-items-center justify-content-center text-center py-5"
     >
-      <div class="container" style="max-width: 500px">
+      <div class="container" style="max-width: 700px">
         <h2 class="fw-bold mb-4">👤 내 프로필</h2>
 
         <!-- 프로필 사진 영역 -->
@@ -115,6 +115,248 @@
                 <td id="infoPhone"></td>
               </tr>
             </table>
+          </div>
+        </div>
+
+        <!-- 추가 구현 기능 4: 나의 활동 통계 대시보드 -->
+        <div class="card bg-dark text-white border-secondary mb-4">
+          <div class="card-body text-start">
+            <h5 class="fw-bold mb-3">📊 나의 활동 통계</h5>
+
+            <p class="text-secondary small mb-3">
+              즐겨찾기, 최근 본 챔피언, 개인 메모 활동을 한눈에 확인할 수
+              있습니다.
+            </p>
+
+            <div class="row text-center g-3">
+              <div class="col-md-3 col-6">
+                <div class="bg-light text-dark rounded p-3">
+                  <div class="fw-bold fs-4" id="statFavoriteCount">0</div>
+                  <div class="small text-secondary">즐겨찾기</div>
+                </div>
+              </div>
+
+              <div class="col-md-3 col-6">
+                <div class="bg-light text-dark rounded p-3">
+                  <div class="fw-bold fs-4" id="statRecentCount">0</div>
+                  <div class="small text-secondary">최근 본 챔피언</div>
+                </div>
+              </div>
+
+              <div class="col-md-3 col-6">
+                <div class="bg-light text-dark rounded p-3">
+                  <div class="fw-bold fs-4" id="statMemoCount">0</div>
+                  <div class="small text-secondary">개인 메모</div>
+                </div>
+              </div>
+
+              <div class="col-md-3 col-6">
+                <div class="bg-warning text-dark rounded p-3">
+                  <div class="fw-bold fs-4" id="statTotalCount">0</div>
+                  <div class="small">전체 활동</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 추가 구현 기능 5: 조건 기반 챔피언 추천 -->
+        <div class="card bg-dark text-white border-secondary mb-4">
+          <div class="card-body text-start">
+            <h5 class="fw-bold mb-3">🎯 조건 기반 챔피언 추천</h5>
+
+            <p class="text-secondary small mb-3">
+              원하는 라인과 난이도를 선택하면 DB에 저장된 챔피언 중 조건에 맞는
+              챔피언을 추천합니다.
+            </p>
+
+            <div id="recommendMsg" class="alert d-none mb-3"></div>
+
+            <div class="row g-2 mb-3">
+              <div class="col-md-6">
+                <label class="form-label">라인 선택</label>
+                <select id="recommendLine" class="form-select">
+                  <option value="">전체 라인</option>
+                  <option value="탑">탑</option>
+                  <option value="정글">정글</option>
+                  <option value="미드">미드</option>
+                  <option value="원딜">원딜</option>
+                  <option value="서폿">서폿</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">난이도 선택</label>
+                <select id="recommendDifficulty" class="form-select">
+                  <option value="">전체 난이도</option>
+                  <option value="하">하</option>
+                  <option value="중">중</option>
+                  <option value="상">상</option>
+                </select>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="btn btn-success w-100 mb-3"
+              onclick="recommendChampions()"
+            >
+              추천 받기
+            </button>
+
+            <div id="recommendResultList">
+              <div class="alert alert-secondary mb-0">
+                라인과 난이도를 선택한 뒤 추천 받기를 눌러보세요.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 추가 구현 기능 6: 랜덤 챔피언 추천 -->
+        <div class="card bg-dark text-white border-secondary mb-4">
+          <div class="card-body text-start">
+            <h5 class="fw-bold mb-3">🎲 랜덤 챔피언 추천</h5>
+
+            <p class="text-secondary small mb-3">
+              DB에 저장된 챔피언 중 하나를 무작위로 추천합니다.
+            </p>
+
+            <button
+              type="button"
+              class="btn btn-primary w-100 mb-3"
+              onclick="randomChampion()"
+            >
+              랜덤 챔피언 뽑기
+            </button>
+
+            <div id="randomChampionResult">
+              <div class="alert alert-secondary mb-0">
+                랜덤 챔피언 뽑기 버튼을 눌러보세요.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 추가 구현 기능 7: 내가 찜한 챔피언 중 랜덤 추천 -->
+        <div class="card bg-dark text-white border-secondary mb-4">
+          <div class="card-body text-start">
+            <h5 class="fw-bold mb-3">💛 내가 찜한 챔피언 랜덤 추천</h5>
+
+            <p class="text-secondary small mb-3">
+              내가 즐겨찾기한 챔피언 중 하나를 무작위로 추천합니다.
+            </p>
+
+            <button
+              type="button"
+              class="btn btn-warning w-100 mb-3"
+              onclick="favoriteRandomChampion()"
+            >
+              찜한 챔피언 중 랜덤 뽑기
+            </button>
+
+            <div id="favoriteRandomChampionResult">
+              <div class="alert alert-secondary mb-0">
+                즐겨찾기한 챔피언 중 랜덤으로 추천받을 수 있습니다.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 추가 구현 기능 1: 내가 찜한 챔피언 목록 -->
+        <div class="card bg-dark text-white border-secondary mb-4">
+          <div class="card-body text-start">
+            <h5 class="fw-bold mb-3">⭐ 내가 찜한 챔피언</h5>
+
+            <p class="text-secondary small mb-3">
+              검색 결과에서 즐겨찾기한 챔피언 목록입니다.
+            </p>
+
+            <div id="favoriteChampionList">
+              <div class="alert alert-secondary mb-0">
+                즐겨찾기 목록을 불러오는 중입니다.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 추가 구현 기능 2: 최근 본 챔피언 목록 -->
+        <div class="card bg-dark text-white border-secondary mb-4">
+          <div class="card-body text-start">
+            <h5 class="fw-bold mb-3">👀 최근 본 챔피언</h5>
+
+            <p class="text-secondary small mb-3">
+              검색 결과에서 클릭한 챔피언이 최근 본 목록에 저장됩니다.
+            </p>
+
+            <div id="recentChampionList">
+              <div class="alert alert-secondary mb-0">
+                최근 본 챔피언 목록을 불러오는 중입니다.
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="btn btn-outline-danger btn-sm mt-3"
+              onclick="clearRecentChampions()"
+            >
+              최근 본 목록 비우기
+            </button>
+          </div>
+        </div>
+
+        <!-- 추가 구현 기능 3: 챔피언 개인 메모 -->
+        <div class="card bg-dark text-white border-secondary mb-4">
+          <div class="card-body text-start">
+            <h5 class="fw-bold mb-3">📝 챔피언 개인 메모</h5>
+
+            <p class="text-secondary small mb-3">
+              챔피언을 선택하고 나만의 공략 메모를 저장할 수 있습니다.
+            </p>
+
+            <!-- 메모 저장 메시지 -->
+            <div id="memoMsg" class="alert d-none mb-3"></div>
+
+            <!-- 메모 작성 폼 -->
+            <form id="memoForm">
+              <div class="mb-3">
+                <label class="form-label">챔피언 선택</label>
+                <select id="memoChampionSelect" class="form-select">
+                  <option value="">챔피언을 선택하세요</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">메모 내용</label>
+                <textarea
+                  id="memoText"
+                  class="form-control"
+                  rows="3"
+                  maxlength="1000"
+                  placeholder="예: 탑 라인에서 사용하기 좋음, 초반에는 조심"
+                ></textarea>
+                <div class="form-text text-secondary">
+                  최대 1000자까지 입력할 수 있습니다.
+                </div>
+              </div>
+
+              <button
+                type="button"
+                class="btn btn-info w-100"
+                onclick="saveChampionMemo()"
+              >
+                메모 저장
+              </button>
+            </form>
+
+            <hr class="my-4" />
+
+            <h6 class="fw-bold mb-3">저장된 메모 목록</h6>
+
+            <div id="memoList">
+              <div class="alert alert-secondary mb-0">
+                저장된 메모 목록을 불러오는 중입니다.
+              </div>
+            </div>
           </div>
         </div>
 
@@ -154,7 +396,7 @@
 
         <hr class="my-4" />
 
-        <!-- 13주차 10~11페이지: 개인정보 수정 폼 -->
+        <!-- 개인정보 수정 폼 -->
         <button
           class="btn btn-warning w-100 mb-2"
           type="button"
@@ -205,7 +447,7 @@
           </div>
         </div>
 
-        <!-- 13주차 16~17페이지: 비밀번호 변경 폼 -->
+        <!-- 비밀번호 변경 폼 -->
         <button
           class="btn btn-danger w-100 mt-3 mb-2"
           type="button"

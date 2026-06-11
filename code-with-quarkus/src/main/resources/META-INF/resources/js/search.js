@@ -2,7 +2,10 @@
 // DB에서 불러온 챔피언 데이터를 저장할 배열
 let CHAMPIONS = [];
 
-// 서버 DB에서 챔피언 목록 불러오기
+// 현재 로그인한 사용자가 즐겨찾기한 챔피언 id 목록
+let FAVORITE_IDS = [];
+
+// ── 서버 DB에서 챔피언 목록 불러오기 ───────────────────────────
 fetch("/champions")
   .then((response) => response.json())
   .then((data) => {
@@ -18,13 +21,35 @@ fetch("/champions")
     }));
 
     console.log("DB 챔피언 데이터 불러오기 성공:", CHAMPIONS);
+
+    // 챔피언 데이터를 불러온 뒤 즐겨찾기 정보도 같이 불러온다.
+    loadFavoriteIds();
   })
   .catch((error) => {
     console.error("챔피언 데이터 불러오기 실패:", error);
   });
 
+// ── 로그인 사용자의 즐겨찾기 챔피언 ID 목록 불러오기 ─────────────
+function loadFavoriteIds() {
+  fetch("/favorites/ids")
+    .then((response) => {
+      if (!response.ok) {
+        return [];
+      }
+
+      return response.json();
+    })
+    .then((ids) => {
+      FAVORITE_IDS = ids;
+      console.log("즐겨찾기 ID 목록:", FAVORITE_IDS);
+    })
+    .catch((error) => {
+      console.error("즐겨찾기 목록 불러오기 실패:", error);
+      FAVORITE_IDS = [];
+    });
+}
+
 // ── 뉴스 데이터 ──────────────────────────────────────────────
-// 객체 배열: 뉴스 한 개당 하나의 객체로 관리한다.
 const NEWS = [
   {
     title: "새로운 챔피언 출시",
@@ -38,8 +63,204 @@ const NEWS = [
   },
 ];
 
+// ── Toast 출력 함수 ───────────────────────────────────────────
+function showFavoriteMessage(message, type = "success") {
+  if (typeof showToast === "function") {
+    showToast(message, type);
+  } else {
+    alert(message);
+  }
+}
+
+// ── 이미지 경로 보정 ───────────────────────────────────────────
+function normalizeImagePath(img) {
+  if (!img) return "/images/logo.png";
+
+  if (img.startsWith("http")) {
+    return img;
+  }
+
+  if (img.startsWith("/")) {
+    return img;
+  }
+
+  return "/" + img;
+}
+
+// ─────────────────────────────────────────────
+// 추가 구현 기능 8: 메인화면 오늘의 랜덤 챔피언
+// ─────────────────────────────────────────────
+function loadMainRandomChampion() {
+  const resultBox = document.getElementById("mainRandomChampionResult");
+
+  if (!resultBox) return;
+
+  fetch("/random/champion")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("오늘의 랜덤 챔피언 조회 실패");
+      }
+
+      return response.json();
+    })
+    .then((data) => {
+      console.log("메인화면 랜덤 챔피언 결과:", data);
+
+      const champion = data.champion;
+
+      if (!champion) {
+        resultBox.innerHTML = `
+          <div class="alert alert-secondary mb-0 text-center">
+            추천할 챔피언이 없습니다.
+          </div>
+        `;
+        return;
+      }
+
+      resultBox.innerHTML = `
+        <div class="row align-items-center bg-light text-dark rounded p-3 mx-1">
+          <div class="col-md-3 text-center mb-3 mb-md-0">
+            <img
+              src="${normalizeImagePath(champion.img)}"
+              alt="${champion.name}"
+              width="120"
+              height="120"
+              class="rounded"
+              style="object-fit: cover;"
+            />
+          </div>
+
+          <div class="col-md-7">
+            <h4 class="fw-bold mb-1">
+              ${champion.name}
+              <span class="text-secondary fs-6">(${champion.engName})</span>
+            </h4>
+
+            <p class="mb-1">
+              역할: ${champion.role}
+              &nbsp;|&nbsp;
+              라인: ${champion.line}
+              &nbsp;|&nbsp;
+              난이도: ${champion.difficulty}
+            </p>
+
+            <p class="text-success small mb-0">
+              ${data.message || "오늘의 랜덤 챔피언이 추천되었습니다."}
+            </p>
+          </div>
+
+          <div class="col-md-2 text-md-end text-center mt-3 mt-md-0">
+            <span class="badge bg-warning text-dark fs-6">오늘의 추천</span>
+          </div>
+        </div>
+      `;
+
+      if (typeof showToast === "function") {
+        showToast("오늘의 랜덤 챔피언이 추천되었습니다.", "success");
+      }
+    })
+    .catch((error) => {
+      console.error("메인화면 랜덤 챔피언 조회 중 오류 발생:", error);
+
+      resultBox.innerHTML = `
+        <div class="alert alert-danger mb-0 text-center">
+          오늘의 랜덤 챔피언을 불러오는 중 오류가 발생했습니다.
+        </div>
+      `;
+    });
+}
+
+// ─────────────────────────────────────────────
+// 추가 구현 기능 9: 메인화면 라인별 빠른 추천
+// ─────────────────────────────────────────────
+function loadMainLineRecommend(line) {
+  const resultBox = document.getElementById("mainLineRecommendResult");
+
+  if (!resultBox) return;
+
+  const query = new URLSearchParams();
+  query.append("line", line);
+
+  fetch(`/recommend/champions?${query.toString()}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("라인별 추천 챔피언 조회 실패");
+      }
+
+      return response.json();
+    })
+    .then((data) => {
+      console.log("메인화면 라인별 추천 결과:", data);
+
+      if (!data.champions || data.champions.length === 0) {
+        resultBox.innerHTML = `
+          <div class="alert alert-secondary mb-0 text-center">
+            ${line} 라인에 해당하는 추천 챔피언이 없습니다.
+          </div>
+        `;
+        return;
+      }
+
+      resultBox.innerHTML = `
+        <div class="alert alert-success text-center">
+          ${line} 라인 추천 챔피언 ${data.count}명을 찾았습니다.
+        </div>
+
+        <div class="row g-3">
+          ${data.champions
+            .map(
+              (champion) => `
+                <div class="col-md-6 col-lg-4">
+                  <div class="d-flex align-items-center bg-light text-dark rounded p-2 h-100">
+                    <img
+                      src="${normalizeImagePath(champion.img)}"
+                      alt="${champion.name}"
+                      width="72"
+                      height="72"
+                      class="rounded me-3"
+                      style="object-fit: cover;"
+                    />
+
+                    <div class="flex-grow-1">
+                      <div class="fw-bold">
+                        ${champion.name}
+                        <span class="text-secondary small">(${champion.engName})</span>
+                      </div>
+
+                      <div class="small text-secondary mt-1">
+                        역할: ${champion.role}
+                        <br />
+                        라인: ${champion.line}
+                        <br />
+                        난이도: ${champion.difficulty}
+                      </div>
+                    </div>
+
+                    <span class="badge bg-success">추천</span>
+                  </div>
+                </div>
+              `,
+            )
+            .join("")}
+        </div>
+      `;
+
+      if (typeof showToast === "function") {
+        showToast(`${line} 라인 추천 챔피언을 불러왔습니다.`, "success");
+      }
+    })
+    .catch((error) => {
+      console.error("메인화면 라인별 추천 중 오류 발생:", error);
+
+      resultBox.innerHTML = `
+        <div class="alert alert-danger mb-0 text-center">
+          라인별 추천 챔피언을 불러오는 중 오류가 발생했습니다.
+        </div>
+      `;
+    });
+}
+
 // ── 검색 결과 카테고리 전환 ─────────────────────────────
-// 챔피언/뉴스 탭을 클릭했을 때 해당 결과만 보여준다.
 function switchCategory(type, el) {
   document.querySelectorAll(".search-category-item").forEach((item) => {
     item.classList.remove("active");
@@ -54,8 +275,123 @@ function switchCategory(type, el) {
     type === "news" ? "block" : "none";
 }
 
+// ── 즐겨찾기 버튼 HTML 만들기 ─────────────────────────────────
+function createFavoriteButton(championId) {
+  const isFavorite = FAVORITE_IDS.includes(championId);
+
+  return `
+    <button
+      type="button"
+      class="btn btn-sm ${isFavorite ? "btn-warning" : "btn-outline-warning"} favorite-btn"
+      data-champion-id="${championId}"
+      title="${isFavorite ? "즐겨찾기 해제" : "즐겨찾기 추가"}"
+    >
+      ${isFavorite ? "★ 즐겨찾기됨" : "☆ 즐겨찾기"}
+    </button>
+  `;
+}
+
+// ── 즐겨찾기 버튼 화면 갱신 ───────────────────────────────────
+function updateFavoriteButton(button, isFavorite) {
+  if (!button) return;
+
+  if (isFavorite) {
+    button.classList.remove("btn-outline-warning");
+    button.classList.add("btn-warning");
+    button.textContent = "★ 즐겨찾기됨";
+    button.title = "즐겨찾기 해제";
+  } else {
+    button.classList.remove("btn-warning");
+    button.classList.add("btn-outline-warning");
+    button.textContent = "☆ 즐겨찾기";
+    button.title = "즐겨찾기 추가";
+  }
+}
+
+// ── 즐겨찾기 추가/해제 처리 ───────────────────────────────────
+function toggleFavorite(championId, button) {
+  fetch(`/favorites/toggle/${championId}`, {
+    method: "POST",
+  })
+    .then((response) => {
+      if (response.status === 401) {
+        showFavoriteMessage("로그인 후 이용할 수 있습니다.", "warning");
+        return null;
+      }
+
+      if (!response.ok) {
+        throw new Error("즐겨찾기 처리 실패");
+      }
+
+      return response.json();
+    })
+    .then((data) => {
+      if (!data) return;
+
+      const isFavorite = data.favorited;
+
+      if (isFavorite) {
+        if (!FAVORITE_IDS.includes(championId)) {
+          FAVORITE_IDS.push(championId);
+        }
+      } else {
+        FAVORITE_IDS = FAVORITE_IDS.filter((id) => id !== championId);
+      }
+
+      updateFavoriteButton(button, isFavorite);
+      showFavoriteMessage(data.message, isFavorite ? "success" : "warning");
+
+      console.log("즐겨찾기 처리 결과:", data);
+    })
+    .catch((error) => {
+      console.error(error);
+      showFavoriteMessage("즐겨찾기 처리 중 오류가 발생했습니다.", "danger");
+    });
+}
+
+// ── 즐겨찾기 버튼 이벤트 등록 ─────────────────────────────────
+function bindFavoriteButtons() {
+  document.querySelectorAll(".favorite-btn").forEach((button) => {
+    button.addEventListener("click", function (e) {
+      // 카드 클릭 이벤트가 같이 실행되지 않도록 막는다.
+      e.preventDefault();
+      e.stopPropagation();
+
+      const championId = Number(this.dataset.championId);
+      toggleFavorite(championId, this);
+    });
+  });
+}
+
+// ── 최근 본 챔피언 저장 ───────────────────────────────────────
+// 챔피언 카드를 클릭하면 로그인 사용자 기준으로 최근 본 챔피언에 저장한다.
+function saveRecentChampion(championId) {
+  fetch(`/recent/view/${championId}`, {
+    method: "POST",
+  })
+    .then((response) => {
+      if (response.status === 401) {
+        console.warn("최근 본 챔피언 저장 실패: 로그인 필요");
+        return null;
+      }
+
+      if (!response.ok) {
+        throw new Error("최근 본 챔피언 저장 실패");
+      }
+
+      return response.json();
+    })
+    .then((data) => {
+      if (!data) return;
+
+      console.log("최근 본 챔피언 저장 결과:", data);
+    })
+    .catch((error) => {
+      console.error("최근 본 챔피언 저장 중 오류 발생:", error);
+    });
+}
+
 // ── 검색 실행 함수 ────────────────────────────────────────────
-// 검색어를 받아 챔피언 데이터와 뉴스 데이터에서 일치하는 항목을 찾는다.
 function performSearch(query) {
   const q = query.trim().toLowerCase();
 
@@ -102,9 +438,10 @@ function performSearch(query) {
         (c) => `
           <div class="search-result-card champion-card d-flex align-items-center p-0 overflow-hidden"
                data-champion="${c.engName}"
+               data-champion-id="${c.id}"
                style="cursor:pointer;">
-            <img src="${c.img}" alt="${c.name}">
-            <div class="p-3">
+            <img src="${normalizeImagePath(c.img)}" alt="${c.name}">
+            <div class="p-3 flex-grow-1">
               <div style="font-weight:700; font-size:1rem; color:#111;">
                 ${c.name}
                 <span style="color:#888; font-size:0.85rem;">(${c.engName})</span>
@@ -115,17 +452,27 @@ function performSearch(query) {
                 난이도: ${c.difficulty}
               </div>
             </div>
+
+            <div class="p-3">
+              ${createFavoriteButton(c.id)}
+            </div>
           </div>
         `,
       )
       .join("");
 
-    // 검색 결과 챔피언 카드를 클릭하면 기존 모달창 열기
+    // 검색 결과 챔피언 카드를 클릭하면 최근 본 챔피언 저장 후 기존 모달창 열기
     document.querySelectorAll(".champion-card").forEach((card) => {
       card.addEventListener("click", function () {
+        const championId = Number(this.dataset.championId);
+
+        saveRecentChampion(championId);
         openChampionModal(this.dataset.champion);
       });
     });
+
+    // 즐겨찾기 버튼 이벤트 등록
+    bindFavoriteButtons();
   }
 
   // ── 뉴스 검색 결과 화면 출력 ─────────────────────────────
@@ -185,7 +532,6 @@ function performSearch(query) {
 }
 
 // ── 메인화면 다시 보여주기 ─────────────────────────────────────
-// 검색어가 비어 있거나 공백일 때 기존 메인 화면으로 돌아간다.
 function showMainScreen() {
   // 검색 결과 섹션 숨김
   const searchResults = document.getElementById("searchResults");
@@ -226,7 +572,6 @@ function openChampionModal(engName) {
 }
 
 // ── 검색 폼 이벤트 등록 ───────────────────────────────────────
-// 검색 버튼 클릭 또는 Enter 입력 시 performSearch 함수 실행
 document.getElementById("searchForm").addEventListener("submit", function (e) {
   e.preventDefault();
 

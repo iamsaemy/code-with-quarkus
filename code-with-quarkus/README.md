@@ -92,6 +92,428 @@ http://localhost:8080/
 
 ---
 
+## 중간고사 시험공부 요약 정리
+
+중간고사 범위는 2주차부터 6주차까지이며, 시험 유형은 객관식 10문제와 주관식 단답형 5문제로 구성된다. 이번 중간고사 범위에서는 Quarkus 개발 환경 구축, HTML 기본 구조, Bootstrap 5 활용, CSS 심화, 하이퍼링크와 이미지 경로, 모달창 구현, 서브 페이지 구성, JavaScript 기본 문법, DOM 조작, 검색 기능 구현 등을 중심으로 학습하였다.
+
+### 1주차 - 강의 소개 및 수업 방향 정리
+
+1주차에서는 자바웹프로그래밍 수업의 전체적인 방향과 평가 방식, 한 학기 동안 진행할 프로젝트 흐름을 확인하였다. 수업은 최신 웹 개발 트렌드와 실습을 함께 진행하는 방식이며, 프론트엔드와 백엔드를 모두 다루는 풀스택 프로젝트 형태로 구성된다.
+
+수업에서 사용할 주요 기술은 HTML, CSS, JavaScript, Bootstrap 5, Quarkus, REST API, DB, JWT, WebSocket 등이다. 프로젝트 주제는 LOL 팬 사이트이며, 메인 화면, 회원제, 실시간 채팅, 반응형 화면, REST API 연동 등을 단계적으로 구현하는 것이 목표이다.
+
+또한 GitHub를 활용하여 매주 실습 결과물을 업로드하고, README.md 파일에 수업 내용과 실행 화면을 정리하는 방식으로 프로젝트를 관리한다.
+
+#### 1주차 핵심 정리
+
+- 자바웹프로그래밍 수업 방향 확인
+- 최신 웹 개발 트렌드 이해
+- 클라우드 네이티브와 Kubernetes 개념 확인
+- Spring Boot와 Quarkus 비교
+- Quarkus의 특징 이해
+- Bootstrap 5와 JavaScript를 활용한 프론트엔드 구성
+- Quarkus 기반 백엔드 개발 흐름 확인
+- GitHub를 활용한 프로젝트 관리 방식 확인
+- 중간고사 범위와 시험 유형 확인
+
+### 2주차 - 개발 환경 구축 및 HTML 기본
+
+2주차에서는 Quarkus 개발 환경을 구축하고, HTML 기본 구조를 학습한 뒤 LOL 팬 사이트 메인 화면 프로토타입을 구현하였다.
+
+먼저 VS Code를 설치하고 Quarkus Tools, Extension Pack for Java, REST Client, Korean 확장 프로그램 등을 설치하였다. Quarkus 프로젝트는 `code.quarkus.io`에서 생성하였고, 프로젝트를 다운로드한 뒤 VS Code에서 폴더를 열어 내부 구조를 확인하였다.
+
+Quarkus 프로젝트에서는 Java 소스 파일, resources 폴더, `pom.xml`, `application.properties` 등의 역할을 이해하는 것이 중요하다. 정적 HTML 파일은 `src/main/resources/META-INF/resources` 폴더 안에 작성해야 하며, `index.html` 파일을 생성하면 `http://localhost:8080/` 주소에서 기본 페이지로 출력된다.
+
+서버 실행은 터미널에서 다음 명령어를 사용한다.
+
+```bash
+cmd /c mvnw.cmd quarkus:dev
+```
+
+수업에서는 `application.properties`에 기본 포트와 시작 페이지, 테스트 설정을 추가하였다.
+
+```properties
+quarkus.http.port=8080
+quarkus.http.static-resources.index-page=index.html
+quarkus.test.continuous-testing=disabled
+```
+
+이후 HTML 기본 문법을 학습하였다. `<!doctype html>`, `<html>`, `<head>`, `<body>`, `<meta>`, `<title>`, `<div>`, `<h1>`, `<p>`, `<ul>`, `<li>` 태그를 사용하여 기본 문서 구조를 만들었다.
+
+그 다음 LOL 메인 화면 프로토타입을 구현하였다. 처음에는 HTML 태그만 사용하여 제목, 설명, 챔피언 목록, 뉴스 영역을 작성하였고, 이후 Bootstrap 5를 적용하여 네비게이션 바, 카드 레이아웃, 버튼 등을 구성하였다. 마지막으로 CSS를 추가하여 어두운 배경, 보라색 포인트 컬러, 카드 hover 효과, 이미지 크기 조정 등을 적용하였다.
+
+#### 2주차 핵심 정리
+
+- VS Code 설치
+- Quarkus Tools 확장 설치
+- JDK 21 설치
+- `code.quarkus.io`에서 Quarkus 프로젝트 생성
+- Quarkus 프로젝트 폴더 구조 확인
+- `src/main/resources/META-INF/resources/index.html` 생성
+- `application.properties` 기본 설정
+- `http://localhost:8080/` 접속 확인
+- HTML 기본 태그 학습
+- LOL 메인 화면 기본 구조 작성
+- Bootstrap 5 CDN 연결
+- 네비게이션 바 구현
+- 챔피언 카드 구현
+- CSS로 다크 테마 적용
+- 카드 hover 효과 구현
+- GitHub 업로드 흐름 학습
+
+#### 2주차 주요 코드 개념
+
+```html
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>League of Legends</title>
+  </head>
+  <body>
+    <h1>League of Legends</h1>
+    <p>적의 넥서스를 파괴하세요!</p>
+  </body>
+</html>
+```
+
+#### 2주차 공부 포인트
+
+2주차에서 가장 중요한 부분은 Quarkus에서 정적 HTML 파일을 어디에 작성해야 하는지 이해하는 것이다. `META-INF/resources/index.html` 위치에 파일을 작성해야 기본 페이지로 인식된다.
+
+또한 Bootstrap 5를 사용하면 직접 CSS를 모두 작성하지 않아도 빠르게 네비게이션 바, 카드, 버튼, 반응형 레이아웃을 만들 수 있다. 시험에서는 `container`, `row`, `col`, `card`, `navbar`, `btn` 같은 Bootstrap 클래스의 역할을 구분하는 것이 중요하다.
+
+### 4주차 - HTML과 CSS 심화
+
+4주차에서는 HTML/CSS 기본 내용을 복습하고, Bootstrap 5를 활용하여 LOL 팬 사이트의 화면 구성을 더 발전시켰다. 주요 내용은 하이퍼링크, 이미지 경로, CSS 선택자, 네비게이션 바 수정, 챔피언 카드 추가, 모달창 구현, 서브 페이지 추가이다.
+
+먼저 Bootstrap 5 문서를 참고하여 네비게이션 바와 카드, 버튼, 모달 컴포넌트를 학습하였다. HTML5 태그는 문서의 구조를 담당하고, Bootstrap 클래스는 디자인과 레이아웃을 담당한다. 예를 들어 `<nav>` 태그는 HTML 구조이고, `navbar`, `navbar-expand-lg`, `navbar-dark`, `bg-dark` 같은 클래스는 Bootstrap 디자인 속성이다.
+
+하이퍼링크는 `<a href="">` 태그로 작성하며, 잘못된 주소를 입력하면 404 오류가 발생한다. 링크의 대상은 `_self`, `_blank`, `_parent`, `_top` 속성으로 제어할 수 있다. 이미지 출력은 `<img src="">` 태그를 사용하며, 외부 이미지뿐만 아니라 로컬 이미지도 사용할 수 있다.
+
+로컬 이미지를 사용하기 위해 `resources/META-INF/resources/images` 폴더를 만들고, 이미지 파일을 저장하였다. 이때 현재 HTML 파일의 위치에 따라 상대 경로가 달라지므로 경로 설정이 중요하다. 특히 `modals/Aatrox.html`처럼 하위 폴더에 있는 파일에서 상위 폴더의 이미지를 불러올 때는 `../images/Aatrox.png`처럼 `../`를 사용해야 한다.
+
+CSS 심화에서는 개발자 도구 F12를 통해 HTML 구조와 CSS 적용 상태를 확인하였다. CSS 선택자의 우선순위는 요소 선택자, 클래스 선택자, ID 선택자, 인라인 스타일, `!important` 순서로 강해진다. 따라서 같은 요소에 여러 스타일이 적용될 때 어떤 스타일이 우선 적용되는지 이해해야 한다.
+
+이후 네비게이션 바를 수정하여 메인화면, 뉴스, 챔피언, 다운로드, 로그인, 외부사이트 메뉴를 구성하였다. 외부사이트 메뉴는 드롭다운 방식으로 만들었고, LOL 공식 웹사이트, Bootstrap 공식문서, Quarkus 공식문서 등으로 연결하였다.
+
+챔피언 카드에는 이미지, 이름, 역할, 난이도, 상세보기 버튼을 추가하였다. 상세보기 버튼은 Bootstrap 모달과 연결되며, `data-bs-toggle="modal"`과 `data-bs-target="#modalAatrox"` 속성을 사용한다. 모달창 내부에는 iframe을 사용하여 `modals/Aatrox.html` 파일을 불러오도록 구성하였다.
+
+또한 다운로드 서브 페이지를 추가하였다. `main_page_sub/download.html` 파일을 만들고, 기존 메인 페이지의 네비게이션 바 디자인을 재사용하였다. 다운로드 페이지에는 다운로드 배너, Windows 다운로드 버튼, Mac 다운로드 버튼, 권장 시스템 사양 표를 추가하였다. CSS는 `css/download.css` 파일로 분리하여 관리하였다.
+
+#### 4주차 핵심 정리
+
+- Bootstrap 5 문서 활용
+- HTML5 태그와 Bootstrap 클래스 구분
+- `<a href="">` 하이퍼링크 작성
+- 링크 주소 오류 시 404 발생
+- `<img src="">` 이미지 태그 사용
+- 외부 이미지와 로컬 이미지 차이 이해
+- `images` 폴더 생성 및 로컬 이미지 저장
+- 상대 경로와 절대 경로 이해
+- `../`는 한 단계 상위 폴더를 의미
+- F12 개발자 도구로 HTML/CSS 확인
+- CSS 선택자 우선순위 이해
+- 네비게이션 바 수정
+- 드롭다운 메뉴 추가
+- 챔피언 카드 추가
+- Bootstrap 모달창 구현
+- iframe으로 상세 페이지 삽입
+- `modals/Aatrox.html` 생성
+- 다운로드 서브 페이지 생성
+- `download.css`로 CSS 분리
+- 시스템 사양 표 구현
+- README.md 작성 및 screenshots 폴더 생성
+
+#### 4주차 주요 코드 개념
+
+```html
+<a class="nav-link" href="main_page_sub/download.html">다운로드</a>
+```
+
+```html
+<img src="images/Aatrox.png" class="card-img-top" alt="아트록스" />
+```
+
+```html
+<button
+  class="btn btn-outline-light w-100"
+  data-bs-toggle="modal"
+  data-bs-target="#modalAatrox"
+>
+  상세 보기
+</button>
+```
+
+```html
+<iframe
+  src="modals/Aatrox.html"
+  frameborder="0"
+  style="width: 100%; height: 100%; border: none;"
+></iframe>
+```
+
+#### 4주차 공부 포인트
+
+4주차에서 가장 중요한 부분은 경로와 컴포넌트 연결이다. 이미지나 HTML 파일을 불러올 때 현재 파일의 위치를 기준으로 경로를 작성해야 하며, 하위 폴더에서 상위 폴더로 이동할 때는 `../`를 사용한다.
+
+또한 Bootstrap 모달은 버튼의 `data-bs-target` 값과 모달의 `id` 값이 일치해야 정상적으로 열린다. 예를 들어 버튼이 `data-bs-target="#modalAatrox"`를 가지고 있다면, 모달 영역은 `id="modalAatrox"`를 가져야 한다.
+
+### 6주차 - JavaScript 기초 및 LOL 검색 기능 구현
+
+6주차에서는 JavaScript의 기본 개념과 문법을 학습하고, LOL 팬 사이트에 실시간 검색 기능을 구현하였다.
+
+JavaScript는 HTML과 CSS로 만들어진 화면에 동작을 추가하는 역할을 한다. HTML은 구조, CSS는 디자인, JavaScript는 동작을 담당한다. 예를 들어 버튼 클릭, 검색, 드롭다운, 모달, 화면 전환 같은 기능은 JavaScript로 처리한다.
+
+JavaScript는 웹 브라우저 안에서 실행되며, 대표적으로 Chrome의 V8 엔진이 사용된다. JavaScript는 인터프리터 언어이면서 함수와 객체를 중심으로 동작한다. 브라우저는 DOM, Timer, Network 같은 Web API를 제공하며, Event Loop를 통해 비동기 동작을 처리한다.
+
+JavaScript 파일은 `<script>` 태그로 HTML에 연결한다. 수업에서는 `resources/META-INF/resources/js` 폴더를 만들고, `bootstrap.bundle.min.js`, `test.js`, `search.js` 파일을 관리하였다. JavaScript 작성 방식에는 인라인 스크립트, 내부 스크립트, 외부 스크립트, CDN 방식이 있다. 이 중 유지보수와 재사용성을 고려하면 외부 스크립트 방식이 가장 권장된다.
+
+JavaScript 기본 문법에서는 `var`, `let`, `const`의 차이를 학습하였다. `var`는 재선언과 재할당이 가능하며 함수 스코프를 가진다. `let`은 재선언은 불가능하지만 재할당은 가능하며 블록 스코프를 가진다. `const`는 재선언과 재할당이 불가능하며 블록 스코프를 가진다.
+
+호이스팅도 중요한 개념이다. `var`는 선언이 위로 끌어올려지며 `undefined`로 초기화되지만, `let`과 `const`는 TDZ가 발생하여 초기화 전에 접근하면 오류가 발생한다. 함수 선언식은 함수 전체가 호이스팅되므로 선언 전에 호출해도 동작할 수 있다.
+
+DOM은 Document Object Model의 약자로, HTML 문서를 트리 구조로 표현한 것이다. JavaScript는 DOM을 통해 HTML 요소를 선택하고, 내용이나 스타일을 변경할 수 있다. `document.getElementById()`, `document.querySelector()`, `document.querySelectorAll()` 같은 메서드를 사용하여 HTML 요소에 접근한다.
+
+검색 기능 구현에서는 `searchForm`의 submit 이벤트를 감지하고, `preventDefault()`를 사용하여 폼의 기본 새로고침 동작을 막았다. 이후 검색어를 `trim()`으로 공백 제거하고, `toLowerCase()`로 소문자로 변환한 뒤 챔피언 데이터와 뉴스 데이터에서 검색어가 포함된 항목을 찾았다.
+
+초기 검색 기능은 Google 검색 새 창을 여는 방식으로 구현하였지만, 이후 사이트 내부에 검색 결과 섹션을 만들고 챔피언과 뉴스 결과를 카테고리별로 출력하도록 수정하였다. 검색 결과가 없을 경우에는 “검색 결과 없음” 메시지를 출력하고, 검색어가 비어 있거나 공백이면 메인 화면으로 돌아가는 기능도 추가하였다.
+
+#### 6주차 핵심 정리
+
+- JavaScript는 웹 페이지의 동작을 담당
+- HTML은 구조, CSS는 디자인, JS는 동작
+- `<script>` 태그로 JavaScript 연결
+- CDN 방식과 로컬 파일 방식 구분
+- 인라인 스크립트는 유지보수와 보안 측면에서 비추천
+- 외부 스크립트 방식이 권장됨
+- `var`, `let`, `const` 차이 이해
+- 스코프, 재선언, 재할당 차이 이해
+- 호이스팅 개념 이해
+- TDZ 개념 이해
+- DOM 구조 이해
+- `document.getElementById()` 사용
+- `addEventListener()`로 이벤트 등록
+- `preventDefault()`로 기본 동작 차단
+- `trim()`으로 공백 제거
+- `toLowerCase()`로 소문자 변환
+- `filter()`로 조건에 맞는 데이터 검색
+- `map()`과 `join()`으로 HTML 문자열 생성
+- 검색 결과 카운트 출력
+- 챔피언/뉴스 카테고리 전환 구현
+- 검색 결과가 없을 때 메시지 출력
+- 검색어가 없을 때 메인 화면 복귀
+
+#### 6주차 주요 코드 개념
+
+```javascript
+document.getElementById("searchForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const query = document.getElementById("searchInput").value.trim();
+
+  if (!query) {
+    return;
+  }
+
+  performSearch(query);
+});
+```
+
+```javascript
+const champResults = CHAMPIONS.filter(
+  (c) =>
+    c.name.includes(q) ||
+    c.engName.toLowerCase().includes(q) ||
+    c.role.includes(q) ||
+    c.lane.includes(q),
+);
+```
+
+```javascript
+document.getElementById("champCount").textContent = `(${champResults.length})`;
+```
+
+```javascript
+champList.innerHTML = champResults
+  .map(
+    (c) => `
+    <div class="search-result-card">
+      <img src="${c.img}" alt="${c.name}">
+      <div>
+        <strong>${c.name}</strong>
+        <span>(${c.engName})</span>
+        <p>역할: ${c.role} | 라인: ${c.lane} | 난이도: ${c.difficulty}</p>
+      </div>
+    </div>
+  `,
+  )
+  .join("");
+```
+
+#### 6주차 공부 포인트
+
+6주차에서 가장 중요한 부분은 JavaScript가 HTML 화면을 어떻게 제어하는지 이해하는 것이다. `document.getElementById()`로 HTML 요소를 가져오고, `addEventListener()`로 이벤트를 연결하며, `innerHTML`이나 `textContent`를 사용하여 화면 내용을 변경한다.
+
+또한 `preventDefault()`는 form 태그의 기본 제출 동작을 막기 위해 사용한다. 검색 기능처럼 페이지를 새로고침하지 않고 JavaScript로 화면을 바꾸고 싶을 때 반드시 필요하다.
+
+검색 기능에서는 배열과 객체 배열의 차이를 이해해야 한다. 단순 배열은 값만 저장하지만, 객체 배열은 이름, 영어 이름, 역할, 라인, 이미지, 난이도처럼 여러 속성을 가진 데이터를 저장할 수 있다. 챔피언 검색 기능은 객체 배열에서 조건에 맞는 항목을 `filter()`로 찾아 화면에 출력하는 방식이다.
+
+### 중간고사 전체 핵심 키워드
+
+- Quarkus
+- VS Code
+- JDK 21
+- `code.quarkus.io`
+- `mvnw quarkus:dev`
+- `application.properties`
+- `META-INF/resources/index.html`
+- HTML 기본 구조
+- `<head>`, `<body>`, `<div>`, `<section>`
+- Bootstrap 5
+- CDN
+- navbar
+- card
+- grid
+- button
+- modal
+- iframe
+- hyperlink
+- `<a href="">`
+- image
+- `<img src="">`
+- 상대 경로
+- 절대 경로
+- `../`
+- CSS 선택자
+- class
+- id
+- hover
+- `!important`
+- JavaScript
+- `<script>`
+- 외부 스크립트
+- `var`, `let`, `const`
+- scope
+- hoisting
+- TDZ
+- DOM
+- `document.getElementById()`
+- `addEventListener()`
+- `preventDefault()`
+- `filter()`
+- `map()`
+- `join()`
+- `innerHTML`
+- `textContent`
+- GitHub
+- commit
+- push
+- README.md
+- screenshots
+
+### 중간고사 예상 문제 정리
+
+#### 객관식 예상 문제
+
+1. Quarkus 정적 HTML 파일을 저장해야 하는 기본 위치는?
+   - `src/main/resources/META-INF/resources`
+
+2. Quarkus 개발 서버 실행 명령어는?
+   - `mvnw quarkus:dev`
+
+3. 기본 접속 주소는?
+   - `http://localhost:8080/`
+
+4. Bootstrap 5를 빠르게 적용하기 위해 사용하는 방식은?
+   - CDN 방식
+
+5. HTML에서 링크를 만들 때 사용하는 태그는?
+   - `<a>`
+
+6. HTML에서 이미지를 출력할 때 사용하는 태그는?
+   - `<img>`
+
+7. 한 단계 상위 폴더를 의미하는 상대 경로 표현은?
+   - `../`
+
+8. Bootstrap 모달 버튼에서 연결 대상 모달을 지정하는 속성은?
+   - `data-bs-target`
+
+9. JavaScript 파일을 HTML에 연결할 때 사용하는 태그는?
+   - `<script>`
+
+10. form 태그의 기본 새로고침 동작을 막는 JavaScript 함수는?
+    - `preventDefault()`
+
+11. HTML 문서를 트리 구조로 표현한 객체 모델은?
+    - DOM
+
+12. JavaScript에서 재선언과 재할당이 모두 가능한 변수 선언 키워드는?
+    - `var`
+
+13. JavaScript에서 재선언은 불가능하지만 재할당은 가능한 변수 선언 키워드는?
+    - `let`
+
+14. JavaScript에서 재선언과 재할당이 모두 불가능한 변수 선언 키워드는?
+    - `const`
+
+15. 배열에서 조건에 맞는 요소만 추출할 때 사용하는 함수는?
+    - `filter()`
+
+#### 주관식 예상 문제
+
+1. Quarkus에서 `META-INF/resources/index.html`의 역할을 설명하시오.
+
+답: Quarkus에서 정적 웹 페이지를 제공하기 위한 기본 위치이다. `index.html`을 이 폴더에 작성하면 `http://localhost:8080/` 주소로 접속했을 때 기본 페이지로 출력된다.
+
+2. Bootstrap을 사용하는 이유를 설명하시오.
+
+답: Bootstrap은 네비게이션 바, 버튼, 카드, 그리드, 모달 같은 디자인 요소를 클래스만으로 빠르게 구현할 수 있게 해준다. 반응형 레이아웃을 쉽게 만들 수 있고, 직접 CSS를 많이 작성하지 않아도 화면 구성이 가능하다.
+
+3. 상대 경로에서 `../`의 의미를 설명하시오.
+
+답: `../`는 현재 파일이 있는 위치에서 한 단계 상위 폴더로 이동한다는 의미이다. 하위 폴더에 있는 HTML 파일에서 상위 폴더의 이미지나 CSS 파일을 불러올 때 사용한다.
+
+4. `var`, `let`, `const`의 차이를 설명하시오.
+
+답: `var`는 재선언과 재할당이 가능하고 함수 스코프를 가진다. `let`은 재선언은 불가능하지만 재할당은 가능하고 블록 스코프를 가진다. `const`는 재선언과 재할당이 모두 불가능하고 블록 스코프를 가진다.
+
+5. DOM이 무엇인지 설명하시오.
+
+답: DOM은 Document Object Model의 약자로, HTML 문서를 트리 구조로 표현한 객체 모델이다. JavaScript는 DOM을 통해 HTML 요소를 선택하고, 내용이나 스타일을 변경할 수 있다.
+
+6. `preventDefault()`의 역할을 설명하시오.
+
+답: `preventDefault()`는 form 제출이나 링크 이동처럼 HTML 요소가 기본적으로 수행하는 동작을 막는 함수이다. 검색 기능에서 페이지 새로고침 없이 JavaScript로 검색 결과를 출력하기 위해 사용한다.
+
+7. `addEventListener()`의 역할을 설명하시오.
+
+답: `addEventListener()`는 특정 HTML 요소에 클릭, 제출, 입력 같은 이벤트를 등록하는 함수이다. 이벤트가 발생했을 때 실행할 함수를 연결할 수 있다.
+
+8. Bootstrap 모달이 열리는 원리를 설명하시오.
+
+답: 모달을 여는 버튼에는 `data-bs-toggle="modal"`과 `data-bs-target="#모달ID"`를 작성한다. 이때 `data-bs-target` 값과 실제 모달 영역의 `id` 값이 일치해야 버튼 클릭 시 해당 모달이 열린다.
+
+9. 외부 JavaScript 파일을 사용하는 장점을 설명하시오.
+
+답: 외부 JavaScript 파일을 사용하면 HTML과 JavaScript 코드를 분리할 수 있어 유지보수가 쉽다. 여러 페이지에서 같은 코드를 재사용할 수 있고, 브라우저 캐시를 활용할 수 있다.
+
+10. `filter()` 함수의 역할을 설명하시오.
+
+답: `filter()`는 배열에서 조건을 만족하는 요소만 골라 새로운 배열로 반환하는 함수이다. 챔피언 검색 기능에서는 검색어가 이름, 영어 이름, 역할, 라인에 포함된 챔피언만 추출하는 데 사용하였다.
+
+### 중간고사 공부 후 정리
+
+중간고사 범위를 공부하면서 Quarkus 프로젝트의 기본 구조와 HTML, CSS, JavaScript가 각각 어떤 역할을 하는지 이해할 수 있었다. HTML은 웹 페이지의 구조를 만들고, CSS와 Bootstrap은 디자인과 레이아웃을 담당하며, JavaScript는 검색, 클릭, 모달, 화면 전환 같은 동작을 처리한다.
+
+또한 Quarkus에서는 정적 파일을 `META-INF/resources` 폴더에서 관리하고, 서버 실행 후 `localhost:8080` 주소로 결과를 확인한다는 점을 학습하였다. GitHub를 통해 매주 실습 내용을 업로드하면서 프로젝트 변경 이력을 관리하는 방법도 익혔다.
+
+이번 중간고사 공부를 통해 단순히 코드를 따라 작성하는 것뿐만 아니라, 각 파일의 위치, 태그의 역할, Bootstrap 클래스의 의미, JavaScript 이벤트 처리 방식까지 함께 정리할 수 있었다.
+
+---
+
 ## 9주차 수업 내용
 
 ### 1. JavaScript 기능 추가
@@ -885,8 +1307,6 @@ MySQL 연동에서는 `lol` 데이터베이스를 생성하고, `pom.xml`에 MyS
 
 ## 9주차~13주차 전체 흐름 정리
 
-9주차부터 13주차까지의 흐름은 다음과 같다.
-
 처음 9주차에는 기존 정적 웹페이지에 JavaScript 기능과 MySQL 데이터베이스 연동을 추가하였다. 챔피언 데이터를 HTML에 직접 작성하는 방식에서 벗어나 DB에 저장하고 API로 불러오는 구조를 만들었다.
 
 10주차에는 사용자가 로그인할 수 있도록 로그인 페이지, 사용자 테이블, 세션 기반 로그인 상태 유지, 로그아웃 기능을 구현하였다. 이때부터 단순 화면 이동이 아니라 서버가 사용자의 로그인 상태를 판단하는 구조가 되었다.
@@ -1006,3 +1426,419 @@ MySQL 연동에서는 `lol` 데이터베이스를 생성하고, `pom.xml`에 MyS
 9주차부터 13주차까지의 내용은 각각 따로 떨어진 기능이 아니라 하나의 웹 서비스로 연결되었다. DB에 저장된 사용자 정보를 기반으로 로그인하고, 세션으로 로그인 상태를 유지하며, 로그인한 사용자는 프로필 정보를 조회하고 수정할 수 있다. 또한 비밀번호와 파일 업로드처럼 보안이 필요한 기능에는 유효성 검사와 오류 처리를 추가하였다.
 
 이를 통해 정적 웹페이지에서 출발한 프로젝트가 점차 실제 웹 서비스 구조로 발전하는 과정을 경험하였다.
+
+---
+
+---
+
+## 추가 구현 기능 1: 로그인 사용자별 챔피언 즐겨찾기
+
+수업 PPT에서 구현한 로그인, 세션, MySQL 데이터베이스, REST API, 프로필 페이지 기능을 확장하여 **로그인 사용자별 챔피언 즐겨찾기 기능**을 추가하였다.
+
+로그인한 사용자가 챔피언을 검색하면 검색 결과 카드에 `☆ 즐겨찾기` 버튼이 표시된다. 버튼을 클릭하면 JavaScript의 `fetch()`를 통해 `/favorites/toggle/{championId}` API로 요청을 보내고, 서버에서는 현재 로그인 세션의 사용자 정보를 확인한 뒤 `favorite_champions` 테이블에 사용자 아이디와 챔피언 ID를 저장한다.
+
+이미 즐겨찾기한 챔피언은 `★ 즐겨찾기됨` 상태로 표시되며, 다시 클릭하면 즐겨찾기가 해제된다. 또한 `/favorites/ids` API를 통해 현재 사용자가 즐겨찾기한 챔피언 ID 목록을 JSON 배열로 확인할 수 있고, `/favorites/my` API를 통해 즐겨찾기한 챔피언의 상세 정보를 조회할 수 있다.
+
+프로필 페이지에는 `⭐ 내가 찜한 챔피언` 영역을 추가하여 사용자가 즐겨찾기한 챔피언 목록을 직접 확인할 수 있도록 하였다. 각 챔피언 항목에는 이미지, 이름, 영문명, 역할, 라인, 난이도가 표시되며, 삭제 버튼을 통해 프로필 페이지에서도 즐겨찾기를 해제할 수 있다.
+
+이 기능을 통해 기존 정적 페이지 중심의 프로젝트를 로그인 사용자별 맞춤형 웹 서비스로 확장하였다.
+
+### 구현 파일
+
+| 파일                    | 구현 내용                                              |
+| ----------------------- | ------------------------------------------------------ |
+| `FavoriteChampion.java` | 사용자별 즐겨찾기 정보를 저장하는 Entity               |
+| `FavoriteResource.java` | 즐겨찾기 조회, 추가, 삭제 REST API                     |
+| `search.js`             | 검색 결과 카드에 즐겨찾기 버튼 추가 및 fetch 요청 처리 |
+| `profile.html`          | 프로필 페이지에 내가 찜한 챔피언 영역 추가             |
+| `profile.js`            | 즐겨찾기 목록 조회 및 삭제 기능 처리                   |
+
+### 주요 API
+
+| API                              | Method | 설명                                             |
+| -------------------------------- | ------ | ------------------------------------------------ |
+| `/favorites/ids`                 | GET    | 로그인 사용자가 즐겨찾기한 챔피언 ID 목록 조회   |
+| `/favorites/my`                  | GET    | 로그인 사용자가 즐겨찾기한 챔피언 상세 목록 조회 |
+| `/favorites/toggle/{championId}` | POST   | 챔피언 즐겨찾기 추가/해제                        |
+| `/favorites/{championId}`        | DELETE | 프로필 페이지에서 즐겨찾기 삭제                  |
+
+### 실행 화면
+
+#### 1. 검색 결과 즐겨찾기 추가 전
+
+![즐겨찾기 추가 전](src/main/resources/META-INF/resources/screenshots/extra_favorite_search_before.png)
+
+#### 2. 검색 결과 즐겨찾기 추가 후
+
+![즐겨찾기 추가 후](src/main/resources/META-INF/resources/screenshots/extra_favorite_search_added.png)
+
+#### 3. 즐겨찾기 ID API 확인
+
+![즐겨찾기 API 확인](src/main/resources/META-INF/resources/screenshots/extra_favorite_api_ids.png)
+
+#### 4. 프로필 페이지에서 내가 찜한 챔피언 확인
+
+![프로필 즐겨찾기 목록](src/main/resources/META-INF/resources/screenshots/extra_favorite_profile_list.png)
+
+#### 5. 프로필 페이지에서 즐겨찾기 삭제
+
+![프로필 즐겨찾기 삭제](src/main/resources/META-INF/resources/screenshots/extra_favorite_profile_delete.png)
+
+---
+
+## 추가 구현 기능 2: 최근 본 챔피언
+
+즐겨찾기 기능에 이어 로그인 사용자별 맞춤 기능을 추가하기 위해 **최근 본 챔피언 기능**을 구현하였다.
+
+사용자가 검색 결과에서 챔피언 카드를 클릭하면 JavaScript의 `fetch()`를 통해 `/recent/view/{championId}` API로 요청을 보내고, 서버에서는 현재 로그인한 사용자 정보를 세션에서 확인한 뒤 `recent_champions` 테이블에 사용자 아이디, 챔피언 ID, 조회 시간을 저장한다.
+
+이미 최근 본 목록에 존재하는 챔피언을 다시 클릭하면 중복으로 새 데이터를 만들지 않고, 기존 데이터의 조회 시간만 최신 시간으로 갱신되도록 구현하였다. 이를 통해 같은 챔피언을 여러 번 클릭해도 최근 본 목록에는 하나만 표시되고, 가장 최근에 확인한 순서로 목록을 관리할 수 있다.
+
+프로필 페이지에는 `👀 최근 본 챔피언` 영역을 추가하여 사용자가 최근에 확인한 챔피언 목록을 볼 수 있도록 하였다. 또한 `최근 본 목록 비우기` 버튼을 추가하여 사용자가 직접 최근 본 챔피언 기록을 삭제할 수 있도록 구현하였다.
+
+이 기능을 통해 기존 검색 기능을 단순 검색에서 끝내지 않고, 사용자 활동 기록을 저장하고 다시 보여주는 기능으로 확장하였다.
+
+### 구현 파일
+
+| 파일                          | 구현 내용                                        |
+| ----------------------------- | ------------------------------------------------ |
+| `RecentChampion.java`         | 사용자별 최근 본 챔피언 정보를 저장하는 Entity   |
+| `RecentChampionResource.java` | 최근 본 챔피언 저장, 조회, 전체 삭제 REST API    |
+| `search.js`                   | 챔피언 카드 클릭 시 최근 본 챔피언 저장 API 호출 |
+| `profile.html`                | 프로필 페이지에 최근 본 챔피언 영역 추가         |
+| `profile.js`                  | 최근 본 챔피언 목록 조회 및 삭제 기능 처리       |
+
+### 주요 API
+
+| API                         | Method | 설명                                          |
+| --------------------------- | ------ | --------------------------------------------- |
+| `/recent/view/{championId}` | POST   | 챔피언 카드 클릭 시 최근 본 챔피언 저장       |
+| `/recent/my`                | GET    | 로그인 사용자가 최근 본 챔피언 목록 조회      |
+| `/recent/clear`             | DELETE | 로그인 사용자의 최근 본 챔피언 목록 전체 삭제 |
+
+### 실행 화면
+
+#### 1. 최근 본 챔피언 API 확인
+
+![최근 본 챔피언 API](src/main/resources/META-INF/resources/screenshots/extra_recent_api_my.png)
+
+#### 2. 프로필 페이지에서 최근 본 챔피언 확인
+
+![최근 본 챔피언 목록](src/main/resources/META-INF/resources/screenshots/extra_recent_profile_list.png)
+
+#### 3. 최근 본 챔피언 목록 삭제
+
+![최근 본 챔피언 삭제](src/main/resources/META-INF/resources/screenshots/extra_recent_profile_clear.png)
+
+---
+
+## 추가 구현 기능 3: 챔피언 개인 메모
+
+즐겨찾기와 최근 본 챔피언 기능에 이어, 로그인 사용자별로 챔피언에 대한 개인 메모를 작성할 수 있는 **챔피언 개인 메모 기능**을 추가하였다.
+
+사용자는 프로필 페이지에서 챔피언을 선택한 뒤 메모 내용을 입력하고 저장할 수 있다. 저장된 메모는 `champion_memos` 테이블에 사용자 아이디, 챔피언 ID, 메모 내용, 마지막 수정 시간과 함께 저장된다.
+
+이미 메모가 존재하는 챔피언에 다시 메모를 저장하면 새로운 데이터가 중복으로 생성되지 않고 기존 메모 내용과 수정 시간이 갱신되도록 구현하였다. 또한 저장된 메모 목록에서 삭제 버튼을 눌러 특정 챔피언 메모를 삭제할 수 있도록 하였다.
+
+이 기능은 단순 조회 기능이 아니라 사용자가 직접 데이터를 입력하고, 저장하고, 다시 조회하고, 삭제할 수 있는 CRUD 기능이다. 이를 통해 기존 프로젝트를 사용자 맞춤형 데이터 관리 웹 서비스로 확장하였다.
+
+### 구현 파일
+
+| 파일                        | 구현 내용                                                       |
+| --------------------------- | --------------------------------------------------------------- |
+| `ChampionMemo.java`         | 사용자별 챔피언 개인 메모 정보를 저장하는 Entity                |
+| `ChampionMemoResource.java` | 메모 저장, 조회, 삭제 REST API                                  |
+| `profile.html`              | 프로필 페이지에 챔피언 개인 메모 작성 영역 추가                 |
+| `profile.js`                | 챔피언 목록 불러오기, 메모 저장, 메모 목록 조회, 메모 삭제 처리 |
+
+### 주요 API
+
+| API                   | Method | 설명                                         |
+| --------------------- | ------ | -------------------------------------------- |
+| `/memos/my`           | GET    | 로그인 사용자가 작성한 챔피언 메모 목록 조회 |
+| `/memos/save`         | POST   | 챔피언 개인 메모 저장 또는 수정              |
+| `/memos/{championId}` | DELETE | 특정 챔피언 메모 삭제                        |
+
+### 실행 화면
+
+#### 1. 챔피언 개인 메모 영역 추가
+
+![챔피언 개인 메모 빈 화면](src/main/resources/META-INF/resources/screenshots/extra_memo_profile_empty.png)
+
+#### 2. 챔피언 개인 메모 저장
+
+![챔피언 개인 메모 저장](src/main/resources/META-INF/resources/screenshots/extra_memo_profile_save.png)
+
+#### 3. 챔피언 개인 메모 삭제
+
+![챔피언 개인 메모 삭제](src/main/resources/META-INF/resources/screenshots/extra_memo_profile_delete.png)
+
+#### 4. 서버 재시작 후 챔피언 메모 유지 확인
+
+![챔피언 메모 서버 재시작 후 유지](src/main/resources/META-INF/resources/screenshots/extra_memo_persist_after_restart.png)
+
+---
+
+## 추가 구현 기능 4: 나의 활동 통계 대시보드
+
+즐겨찾기, 최근 본 챔피언, 챔피언 개인 메모 기능을 구현한 뒤, 사용자의 활동 내역을 한눈에 확인할 수 있도록 **나의 활동 통계 대시보드** 기능을 추가하였다.
+
+프로필 페이지 상단에 `📊 나의 활동 통계` 영역을 만들고, 로그인한 사용자가 저장한 즐겨찾기 수, 최근 본 챔피언 수, 작성한 개인 메모 수, 전체 활동 수를 카드 형태로 표시하였다.
+
+서버에서는 `/stats/my` API를 통해 현재 로그인한 사용자의 세션 정보를 확인한 뒤, `favorite_champions`, `recent_champions`, `champion_memos` 테이블에 저장된 데이터를 각각 조회하여 개수를 계산한다. 계산된 결과는 JSON 형식으로 반환되며, 프론트엔드에서는 JavaScript의 `fetch()`를 사용하여 통계 데이터를 불러와 화면에 표시하였다.
+
+이 기능을 통해 사용자가 프로젝트 안에서 어떤 활동을 했는지 한눈에 확인할 수 있게 되었고, 기존 개별 기능들을 통계 형태로 연결하여 프로필 페이지의 완성도를 높였다.
+
+### 구현 파일
+
+| 파일                     | 구현 내용                                         |
+| ------------------------ | ------------------------------------------------- |
+| `UserStatsResource.java` | 로그인 사용자의 활동 통계 조회 REST API           |
+| `profile.html`           | 프로필 페이지에 나의 활동 통계 대시보드 영역 추가 |
+| `profile.js`             | `/stats/my` API 호출 후 통계 수치를 화면에 표시   |
+
+### 주요 API
+
+| API         | Method | 설명                                                          |
+| ----------- | ------ | ------------------------------------------------------------- |
+| `/stats/my` | GET    | 로그인 사용자의 즐겨찾기, 최근 본 챔피언, 개인 메모 개수 조회 |
+
+### 실행 화면
+
+#### 1. 활동 통계 API 확인
+
+![활동 통계 API 확인](src/main/resources/META-INF/resources/screenshots/extra_stats_api_my.png)
+
+#### 2. 프로필 페이지 활동 통계 대시보드
+
+![프로필 활동 통계 대시보드](src/main/resources/META-INF/resources/screenshots/extra_stats_profile_dashboard.png)
+
+---
+
+## 추가 구현 기능 5: 조건 기반 챔피언 추천
+
+사용자가 원하는 라인과 난이도를 선택하면 DB에 저장된 챔피언 데이터를 기준으로 조건에 맞는 챔피언을 추천하는 **조건 기반 챔피언 추천 기능**을 추가하였다.
+
+프로필 페이지에 `🎯 조건 기반 챔피언 추천` 영역을 만들고, 사용자가 라인과 난이도를 선택할 수 있도록 하였다. 사용자가 `추천 받기` 버튼을 누르면 JavaScript의 `fetch()`를 통해 `/recommend/champions` API로 요청을 보내고, 서버에서는 전달받은 라인과 난이도 조건을 기준으로 `champions` 테이블을 조회한다.
+
+라인만 선택한 경우에는 해당 라인이 포함된 챔피언을 추천하고, 난이도만 선택한 경우에는 해당 난이도의 챔피언을 추천한다. 라인과 난이도를 모두 선택하면 두 조건을 모두 만족하는 챔피언만 추천되도록 구현하였다.
+
+이 기능을 통해 기존 챔피언 검색 기능을 단순 검색에서 끝내지 않고, 사용자의 선택 조건에 따라 맞춤형 챔피언을 추천하는 기능으로 확장하였다.
+
+### 구현 파일
+
+| 파일                             | 구현 내용                                                      |
+| -------------------------------- | -------------------------------------------------------------- |
+| `ChampionRecommendResource.java` | 라인과 난이도 조건에 맞는 챔피언 추천 REST API                 |
+| `profile.html`                   | 프로필 페이지에 조건 기반 챔피언 추천 영역 추가                |
+| `profile.js`                     | 추천 조건 선택 후 `/recommend/champions` API 호출 및 결과 출력 |
+
+### 주요 API
+
+| API                                            | Method | 설명                                         |
+| ---------------------------------------------- | ------ | -------------------------------------------- |
+| `/recommend/champions`                         | GET    | 라인과 난이도 조건에 맞는 챔피언 추천        |
+| `/recommend/champions?line=탑&difficulty=상`   | GET    | 탑 라인, 난이도 상 조건에 맞는 챔피언 추천   |
+| `/recommend/champions?line=정글&difficulty=중` | GET    | 정글 라인, 난이도 중 조건에 맞는 챔피언 추천 |
+
+### 실행 화면
+
+#### 1. 조건 기반 챔피언 추천 API 확인
+
+![챔피언 추천 API 확인](src/main/resources/META-INF/resources/screenshots/extra_recommend_api.png)
+
+#### 2. 프로필 페이지 조건 기반 챔피언 추천 결과
+
+![챔피언 추천 결과](src/main/resources/META-INF/resources/screenshots/extra_recommend_profile_result.png)
+
+---
+
+## 추가 구현 기능 6: 랜덤 챔피언 추천
+
+조건을 직접 선택하지 않아도 DB에 저장된 챔피언 중 하나를 무작위로 추천받을 수 있도록 **랜덤 챔피언 추천 기능**을 추가하였다.
+
+서버에서는 `/random/champion` API를 통해 `champions` 테이블에 저장된 전체 챔피언 목록을 조회한 뒤, 그중 하나를 랜덤으로 선택하여 JSON 형식으로 반환한다. 프론트엔드에서는 JavaScript의 `fetch()`를 사용하여 해당 API를 호출하고, 추천된 챔피언의 이미지, 이름, 영문명, 역할, 라인, 난이도를 화면에 출력하였다.
+
+프로필 페이지에는 `🎲 랜덤 챔피언 추천` 영역을 추가하였고, 사용자가 `랜덤 챔피언 뽑기` 버튼을 누르면 매번 다른 챔피언을 추천받을 수 있도록 구현하였다.
+
+이 기능을 통해 사용자가 특정 조건을 입력하지 않아도 웹사이트에서 자동으로 챔피언을 추천받을 수 있는 기능을 제공하였다.
+
+### 구현 파일
+
+| 파일                          | 구현 내용                                              |
+| ----------------------------- | ------------------------------------------------------ |
+| `RandomChampionResource.java` | DB에 저장된 챔피언 중 랜덤으로 한 명 추천하는 REST API |
+| `profile.html`                | 프로필 페이지에 랜덤 챔피언 추천 영역 추가             |
+| `profile.js`                  | `/random/champion` API 호출 및 랜덤 챔피언 결과 출력   |
+
+### 주요 API
+
+| API                | Method | 설명                                      |
+| ------------------ | ------ | ----------------------------------------- |
+| `/random/champion` | GET    | DB에 저장된 챔피언 중 랜덤으로 한 명 추천 |
+
+### 실행 화면
+
+#### 1. 랜덤 챔피언 추천 API 확인
+
+![랜덤 챔피언 추천 API](src/main/resources/META-INF/resources/screenshots/extra_random_api.png)
+
+#### 2. 프로필 페이지 랜덤 챔피언 추천 결과
+
+![랜덤 챔피언 추천 결과](src/main/resources/META-INF/resources/screenshots/extra_random_profile_result.png)
+
+---
+
+## 추가 구현 기능 7: 내가 찜한 챔피언 중 랜덤 추천
+
+전체 챔피언을 대상으로 랜덤 추천하는 기능에 이어, 로그인 사용자가 직접 즐겨찾기한 챔피언 중 하나를 무작위로 추천하는 **내가 찜한 챔피언 랜덤 추천 기능**을 추가하였다.
+
+서버에서는 `/favorite-random/champion` API를 통해 현재 로그인한 사용자의 세션 정보를 확인하고, `favorite_champions` 테이블에서 해당 사용자가 즐겨찾기한 챔피언 목록을 조회한다. 이후 실제 `champions` 테이블에 존재하는 챔피언만 후보로 사용하여 그중 하나를 랜덤으로 선택한다.
+
+프로필 페이지에는 `💛 내가 찜한 챔피언 랜덤 추천` 영역을 추가하였고, 사용자가 `찜한 챔피언 중 랜덤 뽑기` 버튼을 누르면 자신이 즐겨찾기한 챔피언 중 하나를 추천받을 수 있도록 구현하였다.
+
+이 기능은 단순 랜덤 추천보다 더 개인화된 기능으로, 로그인 세션과 사용자별 즐겨찾기 데이터를 활용한다는 점에서 사용자 맞춤형 웹 서비스의 성격을 강화하였다.
+
+### 구현 파일
+
+| 파일                                  | 구현 내용                                               |
+| ------------------------------------- | ------------------------------------------------------- |
+| `FavoriteRandomChampionResource.java` | 로그인 사용자가 즐겨찾기한 챔피언 중 랜덤 추천 REST API |
+| `profile.html`                        | 프로필 페이지에 찜한 챔피언 랜덤 추천 영역 추가         |
+| `profile.js`                          | `/favorite-random/champion` API 호출 및 결과 출력       |
+
+### 주요 API
+
+| API                         | Method | 설명                                                     |
+| --------------------------- | ------ | -------------------------------------------------------- |
+| `/favorite-random/champion` | GET    | 로그인 사용자가 즐겨찾기한 챔피언 중 랜덤으로 한 명 추천 |
+
+### 실행 화면
+
+#### 1. 내가 찜한 챔피언 랜덤 추천 API 확인
+
+![찜한 챔피언 랜덤 추천 API](src/main/resources/META-INF/resources/screenshots/extra_favorite_random_api.png)
+
+#### 2. 프로필 페이지 내가 찜한 챔피언 랜덤 추천 결과
+
+![찜한 챔피언 랜덤 추천 결과](src/main/resources/META-INF/resources/screenshots/extra_favorite_random_profile_result.png)
+
+---
+
+## 추가 구현 기능 8: 메인화면 오늘의 랜덤 챔피언
+
+프로필 페이지 중심으로 구현된 추가 기능을 메인 웹사이트 화면으로 확장하기 위해 **메인화면 오늘의 랜덤 챔피언 기능**을 추가하였다.
+
+메인화면에 `🎲 오늘의 랜덤 챔피언` 영역을 만들고, 사용자가 `오늘의 챔피언 뽑기` 버튼을 누르면 기존에 구현한 `/random/champion` API를 호출하도록 하였다. 서버에서는 DB에 저장된 챔피언 중 하나를 랜덤으로 선택하여 반환하고, 메인화면에서는 해당 챔피언의 이미지, 이름, 영문명, 역할, 라인, 난이도를 카드 형태로 출력한다.
+
+이 기능은 기존 프로필 페이지에만 집중되어 있던 추가 기능을 메인화면에도 적용한 것으로, 웹사이트 전체의 완성도를 높이는 역할을 한다. 또한 기존 REST API를 재사용하여 기능을 확장했다는 점에서 코드 재사용성과 유지보수 측면에서도 의미가 있다.
+
+### 구현 파일
+
+| 파일                          | 구현 내용                                            |
+| ----------------------------- | ---------------------------------------------------- |
+| `main_after_login.html`       | 메인화면에 오늘의 랜덤 챔피언 영역 추가              |
+| `search.js`                   | `/random/champion` API 호출 및 랜덤 챔피언 결과 출력 |
+| `RandomChampionResource.java` | DB 챔피언 중 랜덤 추천 API 제공                      |
+
+### 주요 API
+
+| API                | Method | 설명                                      |
+| ------------------ | ------ | ----------------------------------------- |
+| `/random/champion` | GET    | DB에 저장된 챔피언 중 랜덤으로 한 명 추천 |
+
+### 실행 화면
+
+#### 메인화면 오늘의 랜덤 챔피언
+
+![메인화면 오늘의 랜덤 챔피언](src/main/resources/META-INF/resources/screenshots/extra_main_random_champion.png)
+
+---
+
+## 추가 구현 기능 9: 메인화면 라인별 빠른 챔피언 추천
+
+메인화면에서도 사용자가 원하는 라인을 빠르게 선택하여 추천 챔피언을 확인할 수 있도록 **라인별 빠른 챔피언 추천 기능**을 추가하였다.
+
+메인화면에 `⚡ 라인별 빠른 챔피언 추천` 영역을 만들고, `탑 추천`, `정글 추천`, `미드 추천`, `원딜 추천`, `서폿 추천` 버튼을 배치하였다. 사용자가 원하는 라인 버튼을 클릭하면 JavaScript의 `fetch()`를 통해 `/recommend/champions?line=라인명` API로 요청을 보내고, 서버에서는 `champions` 테이블에서 해당 라인이 포함된 챔피언 목록을 조회한다.
+
+조회된 챔피언 목록은 메인화면에 카드 형태로 출력되며, 각 카드에는 챔피언 이미지, 이름, 영문명, 역할, 라인, 난이도가 표시된다. 이를 통해 사용자는 검색창을 사용하지 않고도 메인화면에서 바로 라인별 추천 챔피언을 확인할 수 있다.
+
+이 기능은 기존 조건 기반 추천 API를 재사용하여 메인화면으로 확장한 기능이며, 사용자 편의성과 웹사이트 전체 기능성을 높였다.
+
+### 구현 파일
+
+| 파일                             | 구현 내용                                                        |
+| -------------------------------- | ---------------------------------------------------------------- |
+| `main_after_login.html`          | 메인화면에 라인별 빠른 챔피언 추천 영역 추가                     |
+| `search.js`                      | 라인별 버튼 클릭 시 `/recommend/champions` API 호출 및 결과 출력 |
+| `ChampionRecommendResource.java` | 라인 조건에 맞는 챔피언 추천 API 제공                            |
+
+### 주요 API
+
+| API                              | Method | 설명                  |
+| -------------------------------- | ------ | --------------------- |
+| `/recommend/champions?line=탑`   | GET    | 탑 라인 챔피언 추천   |
+| `/recommend/champions?line=정글` | GET    | 정글 라인 챔피언 추천 |
+| `/recommend/champions?line=미드` | GET    | 미드 라인 챔피언 추천 |
+| `/recommend/champions?line=원딜` | GET    | 원딜 라인 챔피언 추천 |
+| `/recommend/champions?line=서폿` | GET    | 서폿 라인 챔피언 추천 |
+
+### 실행 화면
+
+#### 메인화면 라인별 빠른 챔피언 추천
+
+![메인화면 라인별 빠른 챔피언 추천](src/main/resources/META-INF/resources/screenshots/extra_main_line_recommend.png)
+
+---
+
+## 추가 개선: 서버 재시작 후 데이터 유지
+
+추가 기능 구현 과정에서 서버를 재시작할 때 기존 데이터가 초기화되지 않도록 `DataSeeder.java`를 수정하였다.
+
+기존에는 서버가 실행될 때마다 `Champion.deleteAll()`, `User.deleteAll()`이 실행되어 챔피언과 사용자 데이터가 삭제되고 다시 생성되었다. 이 방식은 즐겨찾기, 최근 본 챔피언, 챔피언 개인 메모 기능에서 사용하는 챔피언 ID가 바뀔 수 있어 데이터 연결이 꼬일 위험이 있었다.
+
+이를 해결하기 위해 데이터 전체 삭제 코드를 제거하고, 챔피언 데이터가 하나도 없을 때만 초기 챔피언 데이터를 등록하도록 수정하였다. 또한 `guest` 계정도 이미 존재하면 유지하고, 존재하지 않을 때만 새로 생성되도록 변경하였다.
+
+이 개선을 통해 서버를 재시작해도 사용자가 저장한 즐겨찾기, 최근 본 챔피언, 챔피언 개인 메모 데이터가 유지되도록 하였다.
+
+### 수정 파일
+
+| 파일              | 수정 내용                                                     |
+| ----------------- | ------------------------------------------------------------- |
+| `DataSeeder.java` | 서버 시작 시 데이터 전체 삭제 제거                            |
+| `DataSeeder.java` | `Champion.count() == 0`일 때만 초기 챔피언 등록               |
+| `DataSeeder.java` | `User.findByUsername("guest") == null`일 때만 guest 계정 등록 |
+
+### 실행 화면
+
+#### 서버 재시작 후 데이터 유지 확인
+
+![서버 재시작 후 데이터 유지](src/main/resources/META-INF/resources/screenshots/extra_data_persist_after_restart.png)
+
+#### 서버 재시작 후 챔피언 개인 메모 유지 확인
+
+![챔피언 메모 서버 재시작 후 유지](src/main/resources/META-INF/resources/screenshots/extra_memo_persist_after_restart.png)
+
+---
+
+## 추가 구현 기능 최종 요약
+
+이번 추가 구현에서는 기존 수업에서 배운 로그인, 세션, MySQL 데이터베이스, REST API, JavaScript fetch, 프로필 페이지 기능을 활용하여 사용자별 맞춤 기능과 메인화면 추천 기능을 확장하였다.
+
+| 추가 기능                   | 설명                                                      |
+| --------------------------- | --------------------------------------------------------- |
+| 챔피언 즐겨찾기             | 로그인 사용자별로 원하는 챔피언을 즐겨찾기에 저장         |
+| 즐겨찾기 삭제               | 프로필 페이지에서 즐겨찾기한 챔피언 삭제                  |
+| 최근 본 챔피언              | 검색 결과에서 클릭한 챔피언을 최근 본 목록에 저장         |
+| 최근 본 목록 삭제           | 프로필 페이지에서 최근 본 챔피언 목록 전체 삭제           |
+| 챔피언 개인 메모            | 로그인 사용자별로 챔피언에 대한 개인 메모 저장            |
+| 챔피언 개인 메모 삭제       | 프로필 페이지에서 저장된 챔피언 메모 삭제                 |
+| 나의 활동 통계              | 즐겨찾기, 최근 본 챔피언, 개인 메모 개수를 통계로 표시    |
+| 조건 기반 챔피언 추천       | 라인과 난이도 조건을 기준으로 챔피언 추천                 |
+| 랜덤 챔피언 추천            | DB에 저장된 챔피언 중 하나를 랜덤으로 추천                |
+| 내가 찜한 챔피언 랜덤 추천  | 로그인 사용자가 즐겨찾기한 챔피언 중 하나를 랜덤으로 추천 |
+| 메인화면 오늘의 랜덤 챔피언 | 메인화면에서 DB 챔피언 중 하나를 랜덤 추천                |
+| 메인화면 라인별 빠른 추천   | 메인화면에서 라인 버튼을 눌러 해당 라인의 챔피언 추천     |
+| 데이터 유지 개선            | 서버 재시작 후에도 사용자 데이터가 유지되도록 수정        |
+
+> 기존 수업에서 구현한 로그인, 세션, DB, REST API, 프로필 기능을 활용하여 사용자별 데이터를 저장하고 조회하는 맞춤형 웹 서비스 기능으로 확장하였다. 또한 챔피언 개인 메모 기능을 추가하여 사용자가 직접 데이터를 입력, 저장, 조회, 삭제할 수 있는 CRUD 기능을 구현하였고, 활동 통계와 여러 추천 기능을 통해 사용자 경험을 높였다. 추가로 메인화면에도 랜덤 추천과 라인별 빠른 추천 기능을 적용하여 웹사이트 전체의 완성도를 높였다.
